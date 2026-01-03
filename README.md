@@ -27,8 +27,27 @@ It uses Node.js, Cypress, and Javascript to run end-to-end tests.
 
 ---
 
-## Installation
+## Installation (part 1)
 
+```bash
+# Clone the repository
+git clone (https://github.com/Area-Turtle/cypress-automation-project.git)
+
+# Navigate into the project folder
+cd project-name
+
+# Check if dependencies are updated to latest version (the project required at minimum node to be at v20.x, v22.x and v24.x > or latest LTS version)
+node -v
+nvm -v
+
+# Install dependencies
+npm install
+
+# Local Host Run Site > localhost > http://localhost:3000
+npm start
+```
+
+## Installation (part 2)
 ```bash
 # Clone the repository
 git clone https://github.com/juice-shop/juice-shop
@@ -44,4 +63,5 @@ nvm -v
 npm install
 
 # Local Host Run Site > localhost > http://localhost:3000
-npm start
+npx cypress run
+```
