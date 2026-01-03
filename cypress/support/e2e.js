@@ -26,18 +26,14 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 beforeEach(() => {
   // This code runs before each test
-  const baseUrl=Cypress.config('baseUrl')
-    cy.request(baseUrl)
-        .should('have.property', 'status', 200);
-    cy.visit(baseUrl)
-    cy.get('.cc-btn').click()
-    cy.get('.close-dialog > .mat-mdc-button-touch-target').click({force:true})
-});
-
-afterEach(() => {
-  // Clear cookies, localStorage, and sessionStorage after the test
+    // Clear cookies, localStorage, and sessionStorage after the test
     cy.clearCookies();
     cy.clearLocalStorage();
+    cy.request(Cypress.config('baseUrl'))
+        .should('have.property', 'status', 200);
+    cy.visit(Cypress.config('baseUrl'))
+    cy.get('.cc-btn').click()
+    cy.get('.close-dialog > .mat-mdc-button-touch-target').click({force:true})
 });
 
 

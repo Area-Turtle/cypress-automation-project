@@ -23,3 +23,13 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('typeWithAnimations', (selector,text, wpm = 150) => {
+    const delay = (60 / wpm) * 1000 / 5
+    cy.get(selector).clear();
+    [...text].forEach((letter, index)=>{
+        cy.get(selector)
+        .type(letter,{delay})
+        .wait(delay)
+    })
+})
