@@ -22,5 +22,6 @@
   "homepage": "https://github.com/Area-Turtle/cypress-automation-project#readme",
   "devDependencies": {
     "cypress": "^15.8.1"
-  }
+  },
+  "baseUrl": "https://localhost:3000"
 }
