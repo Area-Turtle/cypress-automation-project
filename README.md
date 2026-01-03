@@ -5,7 +5,8 @@ Demo Website is from OWASP Juice-Shop
 ## Table of Contents
 - [About](#about)
 - [Features](#features)
-- [Installation](#installation)
+- [Installation (part1)](#installation (part1))
+- [Installation (part2)](#installation (part2))
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
