@@ -5,8 +5,8 @@ Demo Website is from OWASP Juice-Shop
 ## Table of Contents
 - [About](#about)
 - [Features](#features)
-- [Installation (part1)](#installation (part1))
-- [Installation (part2)](#installation (part2))
+- [Installation(part1)](#installation(part1))
+- [Installation(part2)](#installation(part2))
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
@@ -28,7 +28,7 @@ It uses Node.js, Cypress, and Javascript to run end-to-end tests.
 
 ---
 
-## Installation (part 1)
+## Installation(part 1)
 
 ```bash
 # Clone the repository
@@ -48,7 +48,7 @@ npm install
 npm start
 ```
 
-## Installation (part 2)
+## Installation(part 2)
 ```bash
 # Clone the repository
 git clone https://github.com/juice-shop/juice-shop
