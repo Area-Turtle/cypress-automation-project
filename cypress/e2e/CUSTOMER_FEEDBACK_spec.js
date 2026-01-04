@@ -10,6 +10,12 @@ describe('customer feedback spec', () => {
     cy.wait(1000)
     //comment text
     cy.typeWithAnimations('#comment','the bad stuff')
+        // Injecting a simple XSS payload
+    cy.get('#comment').type('<script>alert("XSS Attack!");</script>');
+    //cy.get('button[type="submit"]').click();
+    
+    // Assert that the page does not show the script as a result
+    cy.get('body').should('not.contain', 'XSS Attack!');
 
     //slider
     cy.get('.mdc-slider__input').click()

@@ -14,7 +14,8 @@ module.exports = defineConfig({
 
 
     specPattern: ['**/**/LANDINGPAGE_spec.js',
-                  '**/**/CUSTOMER_FEEDBACK_spec.js'
+                  '**/**/CUSTOMER_FEEDBACK_spec.js',
+                  '**/**/SEARCH_spec.js'
     ],
     env: {
       CYPRESS_VERIFY_SSL: false,  // Disables SSL verification
