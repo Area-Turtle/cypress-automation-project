@@ -12,9 +12,33 @@ jobs:
   cypress-run:
     runs-on: windows-latest # Specify the OS where the tests will run
 
+    env:
+      PORT: 3000  # Set the environment variable globally for the job
+
     steps:
-      - name: Checkout code
+      - name: Checkout code (server repo)
         uses: actions/checkout@v2
+        # with:
+        #   repository: user/server-repo  # Specify your server repository
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '24'  # Specify the Node.js version (use the version your project uses)
+      
+      - name: Install server dependencies
+        run: npm install  # Install the server's dependencies
+
+      - name: Start the server
+        run: npm start &  # Run the server in the background
+
+      - name: Wait for the server to start
+        run: npx wait-on http://localhost:3000  # Wait for the server to be accessible
+
+      - name: Checkout code (cypress repo)
+        uses: actions/checkout@v2
+        # with:
+        #   repository: user/cypress-repo  # Specify your Cypress repository
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
