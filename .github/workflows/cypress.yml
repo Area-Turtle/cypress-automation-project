@@ -10,7 +10,7 @@ on:
 
 jobs:
   cypress-run:
-    runs-on: chrome  # Specify the OS where the tests will run
+    runs-on: windows-latest # Specify the OS where the tests will run
 
     steps:
       - name: Checkout code
