@@ -22,3 +22,6 @@ cypress/screenshots/
 
 # Ignore package-lock.json or yarn.lock if needed (rare)
 package-lock.json
+
+# Ignore cypress.config.js
+cypress.config.js
