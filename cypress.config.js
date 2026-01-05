@@ -1,6 +1,10 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  env: {
+    userEmail: '123@email.com',
+    userPassword: 'Password1!',
+  },
 
   e2e: {
     baseUrl: 'http://localhost:3000',  // Base URL for tests
@@ -13,9 +17,11 @@ module.exports = defineConfig({
     browser: 'chrome',
 
 
+
+
     specPattern: ['**/**/LANDINGPAGE_spec.js',
                   '**/**/CUSTOMER_FEEDBACK_spec.js',
-                  '**/**/SEARCH_spec.js'
+                  '**/**/LOGIN_spec.js'
     ],
     env: {
       CYPRESS_VERIFY_SSL: false,  // Disables SSL verification
