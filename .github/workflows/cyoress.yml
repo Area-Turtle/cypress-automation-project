@@ -1,0 +1,36 @@
+name: Cypress Test Suite
+
+on:
+  push:
+    branches:
+      - main  # Runs the workflow on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Runs the workflow on pull requests to the main branch
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest  # Specify the OS where the tests will run
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Specify the Node.js version (use the version your project uses)
+
+      - name: Install dependencies
+        run: |
+          npm install  # Installs the dependencies from package.json
+
+      - name: Install Cypress dependencies
+        run: |
+          npm install cypress --save-dev  # Install Cypress if it's not in your package.json
+
+      - name: Run Cypress tests
+        run: |
+          npx cypress run  # Run the tests using Cypress's CLI
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}  # Optional: Record to the Cypress Dashboard if you have a record key
