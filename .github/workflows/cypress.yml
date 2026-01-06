@@ -36,6 +36,18 @@ jobs:
       # - name: Wait for the server to start
       #   run: npx wait-on http://localhost:3000  # Wait for the server to be accessible
 
+      - name: Check if server is running
+        shell: pwsh
+        run: |
+          shell: pwsh  # Use PowerShell for Windows
+        run: |
+          $url = "http://localhost:3000"
+          while (-not (curl -Uri $url -Method Head -ErrorAction SilentlyContinue)) {
+            Write-Host "Server not running, waiting..."
+            Start-Sleep -Seconds 5  # Wait for 5 seconds before retrying
+          }
+          Write-Host "Server is running!"
+
       # actual test repo
 
       - name: Checkout code (cypress repo)
