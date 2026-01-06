@@ -40,6 +40,9 @@ jobs:
 
       - name: Checkout code (cypress repo)
         uses: actions/checkout@v2
+        with:
+          repository: Area-Turtle/cypress-automation-project  # Specify your Cypress repository, if it's different from the main one
+          ref: main  # Optionally specify the branch for Cypress tests
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -57,5 +60,4 @@ jobs:
       - name: Run Cypress tests
         run: |
           npm run cypress:run  # Run the tests using Cypress's CLI
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}  # Optional: Record to the Cypress Dashboard if you have a record key
+        
