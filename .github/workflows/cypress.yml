@@ -39,8 +39,6 @@ jobs:
       - name: Check if server is running
         shell: pwsh
         run: |
-          shell: pwsh  # Use PowerShell for Windows
-        run: |
           $url = "http://localhost:3000"
           while (-not (curl -Uri $url -Method Head -ErrorAction SilentlyContinue)) {
             Write-Host "Server not running, waiting..."
