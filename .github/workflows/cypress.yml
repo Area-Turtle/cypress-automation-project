@@ -32,6 +32,7 @@ jobs:
 
       - name: Start the server
         run: npm start &  # Run the server in the background
+        wait-on http://localhost:3000
 
       # - name: Wait for the server to start
       #   run: npx wait-on http://localhost:3000  # Wait for the server to be accessible
@@ -40,11 +41,19 @@ jobs:
         shell: pwsh
         run: |
           $url = "http://localhost:3000"
-          while (-not (curl -Uri $url -Method Head -ErrorAction SilentlyContinue)) {
-            Write-Host "Server not running, waiting..."
+          $maxRetries = 10  # Set the maximum number of attempts
+          $counter = 0  # Initialize the counter
+          
+          while (-not (curl -Uri $url -Method Head -ErrorAction SilentlyContinue) -and $counter -lt $maxRetries) {
+            Write-Host "Server not running, waiting... Attempt $($counter + 1) of $maxRetries"
             Start-Sleep -Seconds 5  # Wait for 5 seconds before retrying
+            $counter++  # Increment the counter
           }
-          Write-Host "Server is running!"
+          
+          if ($counter -ge $maxRetries) {
+            Write-Host "Server did not start after $maxRetries attempts. Exiting."
+            exit 1  # Fail the job if the server doesn't start after 10 attempts
+          }
 
       # actual test repo
 
