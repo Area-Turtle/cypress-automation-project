@@ -78,6 +78,7 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
+          install: false
         env:
           CYPRESS_baseUrl: http://localhost:3000/#
 
