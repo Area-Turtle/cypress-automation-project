@@ -10,10 +10,10 @@ on:
 
 jobs:
   cypress-run:
-    runs-on: windows-latest # Specify the OS where the tests will run
+    runs-on: ubuntu-latest # Specify the OS where the tests will run
 
-    env:
-      PORT: 3000  # Set the environment variable globally for the job
+    # env:
+    #   PORT: 3000  # Set the environment variable globally for the job
 
     steps:
       - name: Checkout code (server repo)
@@ -40,39 +40,40 @@ jobs:
         run: npm install  # Install the server's dependencies (extra)
 
       - name: Start the server
-        run: npm start &  # Run the server in the background
-        env:
-          PORT: 3000
-          HOST: 0.0.0.0
-        
+        run: |
+          HOST=0.0.0.0 PORT = 3000 npm start &  # Run the server in the background
+
       - run: curl -v http://localhost:3000 || echo "Server not reachable" # prints whats wrong
       # - name: Wait for the server to start
       #   run: npx wait-on http://localhost:3000  # Wait for the server to be accessible
         env:
           MANPATH: /nonexistent
+      # - name: Check listening ports
+      #   shell: pwsh
+      #   run: netstat -ano | findstr LISTENING
 
-      - name: Check if server is running
-        shell: pwsh
-        run: |
-          $url = "http://localhost:3000"
-          $maxRetries = 10
+      # - name: Check if server is running
+      #   shell: pwsh
+      #   run: |
+      #     $url = "http://localhost:3000"
+      #     $maxRetries = 10
 
-          for ($i = 1; $i -le $maxRetries; $i++) {
-            try {
-              Invoke-WebRequest -Uri $url -Method Head -TimeoutSec 5 | Out-Null
-              Write-Host "Server is running."
-            break
-          }
-          catch {
-            Write-Host "Server not running, waiting... Attempt $i of $maxRetries"
-            Start-Sleep -Seconds 5
-          }
+      #     for ($i = 1; $i -le $maxRetries; $i++) {
+      #       try {
+      #         Invoke-WebRequest -Uri $url -Method Head -TimeoutSec 5 | Out-Null
+      #         Write-Host "Server is running."
+      #       break
+      #     }
+      #     catch {
+      #       Write-Host "Server not running, waiting... Attempt $i of $maxRetries"
+      #       Start-Sleep -Seconds 5
+      #     }
 
-          if ($i -eq $maxRetries) {
-            Write-Host "Server did not start after $maxRetries attempts. Exiting."
-            exit 1
-            }
-          }
+      #     if ($i -eq $maxRetries) {
+      #       Write-Host "Server did not start after $maxRetries attempts. Exiting."
+      #       exit 1
+      #       }
+      #     }
 
       # actual test repo
 
