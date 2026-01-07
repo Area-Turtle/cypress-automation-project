@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout code (cypress repo)
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Area-Turtle/cypress-automation-project  # Specify your Cypress repository, if it's different from the main one
           ref: main  # Optionally specify the branch for Cypress tests
@@ -41,9 +41,10 @@ jobs:
           MANPATH: /nonexistent
 
       - name: Checkout code (server repo)
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Area-Turtle/test-juice-shop-server  # Specify your server repository
+          path: test-juice-shop-server 
           ref: master
 
       - name: Set up Node.js
@@ -79,6 +80,7 @@ jobs:
         with:
           browser: chrome
           install: false
+          working-directory: .
         env:
           CYPRESS_baseUrl: http://localhost:3000/#
 
