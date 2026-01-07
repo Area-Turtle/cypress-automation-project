@@ -75,7 +75,11 @@ jobs:
 
         env:
           MANPATH: /nonexistent
-      - name: Run Cypress tests
-        run: |
-          npm run cypress:run  # Run the tests using Cypress's CLI
+
+      # Run Cypress tests
+      - name: Run Cypress
+        uses: cypress-io/github-action@v5
+        with:
+          browser: chrome
+
         
