@@ -50,34 +50,7 @@ jobs:
       #   run: npx wait-on http://localhost:3000  # Wait for the server to be accessible
         env:
           MANPATH: /nonexistent
-      # - name: Check listening ports
-      #   shell: pwsh
-      #   run: netstat -ano | findstr LISTENING
-
-      # - name: Check if server is running
-      #   shell: pwsh
-      #   run: |
-      #     $url = "http://localhost:3000"
-      #     $maxRetries = 10
-
-      #     for ($i = 1; $i -le $maxRetries; $i++) {
-      #       try {
-      #         Invoke-WebRequest -Uri $url -Method Head -TimeoutSec 5 | Out-Null
-      #         Write-Host "Server is running."
-      #       break
-      #     }
-      #     catch {
-      #       Write-Host "Server not running, waiting... Attempt $i of $maxRetries"
-      #       Start-Sleep -Seconds 5
-      #     }
-
-      #     if ($i -eq $maxRetries) {
-      #       Write-Host "Server did not start after $maxRetries attempts. Exiting."
-      #       exit 1
-      #       }
-      #     }
-
-      # actual test repo
+      
 
       - name: Checkout code (cypress repo)
         uses: actions/checkout@v3
@@ -97,7 +70,11 @@ jobs:
       - name: Install Cypress dependencies
         run: |
           npm install cypress --save-dev  # Install Cypress if it's not in your package.json
+      
+      - run: curl -v http://localhost:3000 || echo "Server not reachable" # prints whats wrong
 
+        env:
+          MANPATH: /nonexistent
       - name: Run Cypress tests
         run: |
           npm run cypress:run  # Run the tests using Cypress's CLI
