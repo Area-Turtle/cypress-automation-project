@@ -16,27 +16,6 @@ jobs:
     #   PORT: 3000  # Set the environment variable globally for the job
 
     steps:
-      - name: Checkout code (cypress repo)
-        uses: actions/checkout@v4
-        with:
-          repository: Area-Turtle/cypress-automation-project  # Specify your Cypress repository, if it's different from the main one
-          ref: main  # Optionally specify the branch for Cypress tests
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'  # Specify the Node.js version (use the version your project uses)
-
-      - name: Install dependencies
-        run: |
-          npm install  # Installs the dependencies from package.json
-
-      - name: Install Cypress dependencies
-        run: |
-          npm install cypress --save-dev  # Install Cypress if it's not in your package.json
-        env:
-          MANPATH: /nonexistent
-
       - name: Checkout code (server repo)
         uses: actions/checkout@v4
         with:
@@ -60,6 +39,27 @@ jobs:
 
       - name: Install server dependencies
         run: npm install  # Install the server's dependencies (extra)
+
+      - name: Checkout code (cypress repo)
+        uses: actions/checkout@v4
+        with:
+          repository: Area-Turtle/cypress-automation-project  # Specify your Cypress repository, if it's different from the main one
+          ref: main  # Optionally specify the branch for Cypress tests
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'  # Specify the Node.js version (use the version your project uses)
+
+      - name: Install dependencies
+        run: |
+          npm install  # Installs the dependencies from package.json
+
+      - name: Install Cypress dependencies
+        run: |
+          npm install cypress --save-dev  # Install Cypress if it's not in your package.json
+        env:
+          MANPATH: /nonexistent
 
       - name: Start the server # Run the server in the background
         run: |
