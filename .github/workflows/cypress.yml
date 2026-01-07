@@ -69,7 +69,7 @@ jobs:
           PORT=3000 
           npm start &  
 
-      - run: curl -v http://localhost:3000 || echo "Server not reachable" # prints whats wrong
+      - run: curl -v http://localhost:3000/# || echo "Server not reachable" # prints whats wrong
         env:
           MANPATH: /nonexistent
 
@@ -92,10 +92,15 @@ jobs:
         run: |
           npm install cypress --save-dev  # Install Cypress if it's not in your package.json
       
-      - run: curl -v http://localhost:3000 || echo "Server not reachable" # prints whats wrong
+      - run: curl -v http://localhost:3000/# || echo "Server not reachable" # prints whats wrong
 
         env:
           MANPATH: /nonexistent
+
+      - name: Verify server manually
+        run: |
+          curl -I http://localhost:3000 || true
+          curl -I http://localhost:3000/ || true
 
       # Run Cypress tests
       - name: Run Cypress
@@ -103,6 +108,6 @@ jobs:
         with:
           browser: chrome
         env:
-          CYPRESS_baseUrl: http://localhost:3000
+          CYPRESS_baseUrl: http://localhost:3000/#
 
         
