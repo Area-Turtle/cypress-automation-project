@@ -10,10 +10,10 @@ on:
 
 jobs:
   cypress-run:
-    runs-on: windows-latest # Specify the OS where the tests will run
+    runs-on: ubuntu-latest # Specify the OS where the tests will run
 
-    env:
-      PORT: 3000  # Set the environment variable globally for the job
+    # env:
+    #   PORT: 3000  # Set the environment variable globally for the job
 
     steps:
       - name: Checkout code (server repo)
@@ -27,26 +27,55 @@ jobs:
         with:
           node-version: '24'  # Specify the Node.js version (use the version your project uses)
       
+      # test attempt to cache npm files
+      - name: Cache npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
       - name: Install server dependencies
-        run: npm install  # Install the server's dependencies
+        run: npm install  # Install the server's dependencies (extra)
 
-      - name: Start the server
-        run: npm start &  # Run the server in the background
+      - name: Start the server # Run the server in the background
+        run: |
+          HOST=0.0.0.0 
+          PORT=3000 
+          npm start &  
 
+      - run: curl -v http://localhost:3000 || echo "Server not reachable" # prints whats wrong
       # - name: Wait for the server to start
       #   run: npx wait-on http://localhost:3000  # Wait for the server to be accessible
+        env:
+          MANPATH: /nonexistent
+      # - name: Check listening ports
+      #   shell: pwsh
+      #   run: netstat -ano | findstr LISTENING
 
-      - name: Check if server is running
-        shell: pwsh
-        run: |
-          shell: pwsh  # Use PowerShell for Windows
-        run: |
-          $url = "http://localhost:3000"
-          while (-not (curl -Uri $url -Method Head -ErrorAction SilentlyContinue)) {
-            Write-Host "Server not running, waiting..."
-            Start-Sleep -Seconds 5  # Wait for 5 seconds before retrying
-          }
-          Write-Host "Server is running!"
+      # - name: Check if server is running
+      #   shell: pwsh
+      #   run: |
+      #     $url = "http://localhost:3000"
+      #     $maxRetries = 10
+
+      #     for ($i = 1; $i -le $maxRetries; $i++) {
+      #       try {
+      #         Invoke-WebRequest -Uri $url -Method Head -TimeoutSec 5 | Out-Null
+      #         Write-Host "Server is running."
+      #       break
+      #     }
+      #     catch {
+      #       Write-Host "Server not running, waiting... Attempt $i of $maxRetries"
+      #       Start-Sleep -Seconds 5
+      #     }
+
+      #     if ($i -eq $maxRetries) {
+      #       Write-Host "Server did not start after $maxRetries attempts. Exiting."
+      #       exit 1
+      #       }
+      #     }
 
       # actual test repo
 
