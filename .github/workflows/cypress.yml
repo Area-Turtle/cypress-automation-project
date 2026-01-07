@@ -31,7 +31,10 @@ jobs:
         run: npm install  # Install the server's dependencies
 
       - name: Start the server
-        run: npm start &  # Run the server in the background
+        run: | 
+          export PORT=3000
+          export HOST=0.0.0.0
+          npm start &  # Run the server in the background
         
       - run: curl -v http://localhost:3000 || echo "Server not reachable" # prints whats wrong
       # - name: Wait for the server to start
