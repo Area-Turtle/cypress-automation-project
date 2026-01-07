@@ -63,6 +63,7 @@ jobs:
 
       - name: Start the server # Run the server in the background
         run: |
+          cd test-juice-shop-server
           HOST=0.0.0.0 
           PORT=3000 
           npm start &  
