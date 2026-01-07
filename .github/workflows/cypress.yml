@@ -27,8 +27,20 @@ jobs:
         with:
           node-version: '24'  # Specify the Node.js version (use the version your project uses)
       
+      # test attempt to cache npm files
+      - name: Cache npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Install server dependencies
-        run: npm install  # Install the server's dependencies
+        run: npm install  # Install the server's dependencies (extra)
 
       - name: Start the server
         run: | 
