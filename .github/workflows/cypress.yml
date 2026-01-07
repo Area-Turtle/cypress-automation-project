@@ -99,10 +99,10 @@ jobs:
 
       # Run Cypress tests
       - name: Run Cypress
-        run: |
-          HOST=0.0.0.0 PORT=3000
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
+        run: |
+          HOST=0.0.0.0 PORT=3000
 
         
