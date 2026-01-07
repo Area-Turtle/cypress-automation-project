@@ -34,9 +34,6 @@ jobs:
       - name: Install Cypress dependencies
         run: |
           npm install cypress --save-dev  # Install Cypress if it's not in your package.json
-      
-      - run: curl -v http://localhost:3000 || echo "Server not reachable" # prints whats wrong
-
         env:
           MANPATH: /nonexistent
 
