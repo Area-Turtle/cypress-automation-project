@@ -1,10 +1,7 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  env: {
-    userEmail: '123@email.com',
-    userPassword: 'Password1!',
-  },
+
 
   e2e: {
     baseUrl: 'http://localhost:3000',  // Base URL for tests
@@ -25,6 +22,8 @@ module.exports = defineConfig({
     ],
     env: {
       CYPRESS_VERIFY_SSL: false,  // Disables SSL verification
+      userEmail: '123@email.com',
+      userPassword: 'Password1!',
     },
     setupNodeEvents(on, config) {
       // implement node event listeners here
