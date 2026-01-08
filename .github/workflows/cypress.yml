@@ -43,20 +43,24 @@ jobs:
           key: ${{ runner.os }}-npm-${{ hashFiles('package.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
+
       - name: List folder structure
         run: ls -R
-        
+
       - name: Install dependencies (cypress)
         run: |
           npm install  # Installs the dependencies from package.json
-          working-directory: cypress-automation-project
+          working-directory: ./cypress-automation-project
         env:
           MANPATH: /nonexistent
 
       - name: Install server dependencies (server)
         run: npm install  # Install the server's dependencies (extra)
-        working-directory: test-juice-shop-server
+        working-directory: ./test-juice-shop-server
 
+      - name: List folder structure
+        run: ls -R
+        
       - name: Start the server # Run the server in the background
         run: |
           cd test-juice-shop-server
