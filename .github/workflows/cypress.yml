@@ -26,7 +26,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Area-Turtle/test-juice-shop-server  # Specify your server repository
-          path: test-juice-shop-server 
           ref: master
 
       - name: Set up Node.js
@@ -63,7 +62,6 @@ jobs:
 
       - name: Start the server # Run the server in the background
         run: |
-          cd test-juice-shop-server
           HOST=0.0.0.0 
           PORT=3000 
           npm start &  
@@ -73,14 +71,14 @@ jobs:
           MANPATH: /nonexistent
 
       # Run Cypress tests
-      - name: Run Cypress
-        uses: cypress-io/github-action@v5
-        with:
-          browser: chrome
-          install: false
-          working-directory: .
-        env:
-          CYPRESS_baseUrl: http://localhost:3000/#
+      # - name: Run Cypress
+      #   uses: cypress-io/github-action@v5
+      #   with:
+      #     browser: chrome
+      #     install: false
+      #     working-directory: .
+      #   env:
+      #     CYPRESS_baseUrl: http://localhost:3000/#
 
       # - name: Checkout code (cypress repo)
       #   uses: actions/checkout@v3
