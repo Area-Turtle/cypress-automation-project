@@ -36,13 +36,21 @@ jobs:
           node-version: 24  # Specify the Node.js version (use the version your project uses)
       
 
-      - name: Cache npm
+      - name: Cache Cypress npm
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('package.json') }}
+          key: ${{ runner.os }}-npm-cypress-${{ hashFiles('cypress-automation-project/**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-npm-
+            ${{ runner.os }}-npm-cypress-
+
+      - name: Cache Server npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-server-${{ hashFiles('test-juice-shop-server/**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-server-
 
       - name: Install dependencies (cypress)
         run: npm install  # Installs the dependencies from package.json
@@ -78,6 +86,3 @@ jobs:
           working-directory: cypress-automation-project
         env:
           CYPRESS_baseUrl: http://localhost:3000/#
-
-      
-        
