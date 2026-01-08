@@ -46,16 +46,11 @@ jobs:
 
       - name: List folder structure
         run: |
-          ls -1
-          for d in */; do
-            echo "$d/"
-            ls -1 "$d"
-          done
+          ls -r
 
       - name: Install dependencies (cypress)
         run: |
           npm install  # Installs the dependencies from package.json
-          # working-directory: cypress-automation-project/cypress-automation-project
         env:
           MANPATH: /nonexistent
 
