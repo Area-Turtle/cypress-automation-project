@@ -44,10 +44,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
 
-      - name: List folder structure
-        run: |
-          ls -r
-
       - name: Install dependencies (cypress)
         run: npm install  # Installs the dependencies from package.json
         working-directory: cypress-automation-project
@@ -57,9 +53,6 @@ jobs:
       - name: Install server dependencies (server)
         run: npm install  # Install the server's dependencies (extra)
         working-directory: test-juice-shop-server
-
-      - name: List folder structure
-        run: ls -R
 
       - name: Start the server # Run the server in the background
         run: |
@@ -85,35 +78,6 @@ jobs:
           working-directory: cypress-automation-project
         env:
           CYPRESS_baseUrl: http://localhost:3000/#
-
-      # - name: Checkout code (cypress repo)
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: Area-Turtle/cypress-automation-project  # Specify your Cypress repository, if it's different from the main one
-      #     ref: main  # Optionally specify the branch for Cypress tests
-
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: '24'  # Specify the Node.js version (use the version your project uses)
-
-      # - name: Install dependencies
-      #   run: |
-      #     npm install  # Installs the dependencies from package.json
-
-      # - name: Install Cypress dependencies
-      #   run: |
-      #     npm install cypress --save-dev  # Install Cypress if it's not in your package.json
-      
-      # - run: curl -v http://localhost:3000/# || echo "Server not reachable" # prints whats wrong
-
-      #   env:
-      #     MANPATH: /nonexistent
-
-      # - name: Verify server manually
-      #   run: |
-      #     curl -I http://localhost:3000 || true
-      #     curl -I http://localhost:3000/# || true
 
       
         
