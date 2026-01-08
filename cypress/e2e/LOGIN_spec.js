@@ -29,6 +29,7 @@ describe('landing page spec', () => {
     it('login with user', () => {
         cy.visit(Cypress.env('baseUrl') + '#/login')
     })
+    
     it('basic cybersecurity headers', () => {
         cy.visit(Cypress.env('baseUrl') + '#/login')
         cy.checkHeaders('/#/login');
