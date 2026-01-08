@@ -74,7 +74,7 @@ jobs:
 
       # Run Cypress tests
       - name: Run Cypress
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v4
         with:
           browser: chrome
           install: false
