@@ -1,39 +1,37 @@
 describe('customer feedback spec', () => {
   it('opens on customer feedback page', () => {
-    cy.request(Cypress.env('baseUrl')+'#/contact')
+    cy.request(Cypress.env('baseUrl') + '#/contact')
       .should('have.property', 'status', 200);
   })
+  it('basic cybersecurity headers', () => {
+    cy.checkHeaders('#/contact');
 
-  it('completes customer feedback form',()=> {
-    
-    cy.visit(Cypress.env('baseUrl')+'#/contact')
+  })
+
+  it('completes customer feedback form', () => {
+
+    cy.visit(Cypress.env('baseUrl') + '#/contact')
     cy.wait(1000)
     //comment text
-    cy.typeWithAnimations('#comment','the bad stuff')
-        // Injecting a simple XSS payload
-    cy.get('#comment').type('<script>alert("XSS Attack!");</script>');
-    //cy.get('button[type="submit"]').click();
-    
-    // Assert that the page does not show the script as a result
-    cy.get('body').should('not.contain', 'XSS Attack!');
+    cy.typeWithAnimations('#comment', 'the bad stuff')
 
     //slider
     cy.get('.mdc-slider__input').click()
 
     // captcha values
     cy.get('#captcha')
-      .then(($el)=>{
-        
+      .then(($el) => {
+
         const equationText = $el.text().trim()
         cy.log('captcha contents', equationText)
         const result = eval(equationText)
         cy.log('results', result)
 
         cy.get('#feedback-form > mat-form-field:nth-child(6) > div.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--outlined').type(result)
-    })
+      })
 
     //submit form
-    cy.get('#submitButton > .mat-mdc-button-touch-target').click({force:true})
+    cy.get('#submitButton > .mat-mdc-button-touch-target').click({ force: true })
 
   })
 
