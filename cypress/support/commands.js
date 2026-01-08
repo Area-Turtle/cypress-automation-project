@@ -24,24 +24,24 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('typeWithAnimations', (selector,text, wpm = 150) => {
+Cypress.Commands.add('typeWithAnimations', (selector, text, wpm = 150) => {
     const delay = (60 / wpm) * 1000 / 5
     cy.get(selector).clear();
-    [...text].forEach((letter, index)=>{
+    [...text].forEach((letter, index) => {
         cy.get(selector)
-        .type(letter,{delay})
-        .wait(delay)
+            .type(letter, { delay })
+            .wait(delay)
     })
 })
 
 Cypress.Commands.add('checkHeaders', (extention) => {
     const commonHeaders = [
-        "Strict-Transport-Security","Content-Security-Policy","X-Content-Type-Options",
-        "X-Frame-Options","X-XSS-Protection","Referrer-Policy",
-        "Permissions-Policy","Access-Control-Allow-Origin","Cache-Control",
-        "Expect-CT","Feature-Policy","Location"
+        "Strict-Transport-Security", "Content-Security-Policy", "X-Content-Type-Options",
+        "X-Frame-Options", "X-XSS-Protection", "Referrer-Policy",
+        "Permissions-Policy", "Access-Control-Allow-Origin", "Cache-Control",
+        "Expect-CT", "Feature-Policy", "Location"
     ];
-    cy.request(Cypress.config('baseUrl')+extention)
+    cy.request(Cypress.config('baseUrl') + extention)
         .then((response) => {
             cy.log('Response Headers:', JSON.stringify(response.headers));
 
@@ -67,4 +67,27 @@ Cypress.Commands.add('checkHeaders', (extention) => {
             compareHeaders(commonHeaders, responseHeaders);
         });
 })
+
+Cypress.Commands.add('loginNewUser', () => {
+    cy.visit(Cypress.env('baseUrl') + '#/login')
+    cy.get('#newCustomerLink').click()
+    cy.request(Cypress.env('baseUrl') + '/undefined#/register')
+        .should('have.property', 'status', 200)
+
+    cy.get('#emailControl').type(Cypress.env('userEmail'))
+    cy.get('#passwordControl').type(Cypress.env('userPassword'))
+    cy.get('#repeatPasswordControl').type(Cypress.env('userPassword'))
+    cy.get('.mat-mdc-select-placeholder').click({ force: true })
+    cy.get('#mat-option-0').click({ force: true })
+    cy.get('#securityAnswerControl').type('abc{enter}')
+})
+Cypress.Commands.add('loginExistUser', () => {
+    cy.visit(Cypress.env('baseUrl') + '#/login')
+    cy.request(Cypress.env('baseUrl') + '#/login')
+    .should('have.property', 'status', 200)
+    cy.get('[name="email"]').type(Cypress.env('userEmail'))
+    cy.get('[name="password"]').type(Cypress.env('userPassword'))
+    cy.get('#loginButton > .mat-mdc-button-touch-target').click({ force: true })
+})
+
 
