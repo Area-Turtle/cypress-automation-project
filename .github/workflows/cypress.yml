@@ -50,7 +50,7 @@ jobs:
 
       - name: Install dependencies (cypress)
         run: npm install  # Installs the dependencies from package.json
-        working-diectory: cypress-automation-project/cypress-automation-project
+        working-directory: cypress-automation-project/cypress-automation-project
         env:
           MANPATH: /nonexistent
 
