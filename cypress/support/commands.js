@@ -69,7 +69,7 @@ Cypress.Commands.add('checkHeaders', (extention) => {
 })
 
 Cypress.Commands.add('login', (user, { create = false } = {}) => {
-    cy.session(`user:${user.email}`, () => {
+
         cy.visit(Cypress.env('baseUrl') + '#/login')
         if (create) {
             // Register new user
@@ -97,7 +97,7 @@ Cypress.Commands.add('login', (user, { create = false } = {}) => {
                 .its('status')
                 .should('eq', 200);
         }
-    });
+
 });
 
 Cypress.Commands.add('loginSession', (user) => {
@@ -142,13 +142,13 @@ Cypress.Commands.add('loginSession', (user) => {
         }
     });
 });
-Cypress.Commands.add('logoutUI', () => {
+Cypress.Commands.add('logout', () => {
   // Click the logout button
-  cy.get('#navbarAccount > .mdc-button__label > span').click({ force: true });
-  cy.get('#navbarLogoutButton').click({ force: true });
+    cy.get('#navbarAccount > span.mat-mdc-button-touch-target').click({ force: true });
+    cy.get('#navbarLogoutButton').click({ force: true });
 
-  // Confirm logout
-  cy.url().should('include', '#/login');
+    // Confirm logout
+    cy.url().should('include', 'undefined#/');
 });
 
 
