@@ -82,7 +82,6 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
-          install: false
           working-directory: cypress-automation-project
           command: run --reporter spec
         env:
