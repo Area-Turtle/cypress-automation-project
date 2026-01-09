@@ -68,26 +68,89 @@ Cypress.Commands.add('checkHeaders', (extention) => {
         });
 })
 
-Cypress.Commands.add('loginNewUser', () => {
-    cy.visit(Cypress.env('baseUrl') + '#/login')
-    cy.get('#newCustomerLink').click()
-    cy.request(Cypress.env('baseUrl') + '/undefined#/register')
-        .should('have.property', 'status', 200)
+Cypress.Commands.add('login', (user, { create = false } = {}) => {
 
-    cy.get('#emailControl').type(Cypress.env('userEmail'))
-    cy.get('#passwordControl').type(Cypress.env('userPassword'))
-    cy.get('#repeatPasswordControl').type(Cypress.env('userPassword'))
-    cy.get('.mat-mdc-select-placeholder').click({ force: true })
-    cy.get('#mat-option-0').click({ force: true })
-    cy.get('#securityAnswerControl').type('abc{enter}')
-})
-Cypress.Commands.add('loginExistUser', () => {
     cy.visit(Cypress.env('baseUrl') + '#/login')
-    cy.request(Cypress.env('baseUrl') + '#/login')
-    .should('have.property', 'status', 200)
-    cy.get('[name="email"]').type(Cypress.env('userEmail'))
-    cy.get('[name="password"]').type(Cypress.env('userPassword'))
-    cy.get('#loginButton > .mat-mdc-button-touch-target').click({ force: true })
-})
+    if (create) {
+        // Register new user
+        cy.visit('/undefined#/register');
+
+        cy.get('#emailControl').type(user.email);
+        cy.get('#passwordControl').type(user.password);
+        cy.get('#repeatPasswordControl').type(user.password);
+
+        cy.get('.mat-mdc-select-placeholder').click({ force: true });
+        cy.get('#mat-option-0').click({ force: true });
+
+        cy.get('#securityAnswerControl').type('abc');
+        cy.get('#registerButton').click({ force: true });
+    } else {
+        // Login existing user
+        cy.get('[name="email"]').type(user.email);
+        cy.get('[name="password"]').type(user.password);
+        cy.get('#loginButton').click({ force: true });
+    }
+
+}, {
+    validate() {
+        cy.request('/rest/user/whoami')
+            .its('status')
+            .should('eq', 200);
+    }
+
+});
+
+Cypress.Commands.add('loginSession', (user) => {
+    cy.visit(Cypress.env('baseUrl') + '#/login')
+    cy.session(user.email, () => {
+
+        // Check if user exists
+        cy.request({
+            method: 'GET',
+            url: '/rest/user/whoami',
+            failOnStatusCode: false
+        }).then((res) => {
+
+            // Create user if not found
+
+            if (res.status === 404) {
+                cy.log('create user if not found')
+                cy.request({
+                    method: 'POST',
+                    url: '/undefined/undefined#/register',
+                    body: {
+                        user
+                    }
+                });
+            }
+
+            //login
+            cy.request({
+                method: 'POST',
+                url: '/rest/user/login',
+                body: {
+                    email: user.email,
+                    password: user.password
+                }
+            });
+        });
+    }, {
+        validate() {
+            cy.request('/rest/user/whoami')
+                .its('status')
+                .should('eq', 200);
+        }
+    });
+});
+Cypress.Commands.add('logout', () => {
+    // Click the logout button
+    cy.get('#navbarAccount > span.mat-mdc-button-touch-target').click({ force: true });
+    cy.get('#navbarLogoutButton').click({ force: true });
+
+    // Confirm logout
+    cy.url().should('include', 'undefined#/');
+});
+
+
 
 
