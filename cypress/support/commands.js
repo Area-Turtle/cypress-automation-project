@@ -70,33 +70,33 @@ Cypress.Commands.add('checkHeaders', (extention) => {
 
 Cypress.Commands.add('login', (user, { create = false } = {}) => {
 
-        cy.visit(Cypress.env('baseUrl') + '#/login')
-        if (create) {
-            // Register new user
-            cy.visit('/undefined#/register');
+    cy.visit(Cypress.env('baseUrl') + '#/login')
+    if (create) {
+        // Register new user
+        cy.visit('/undefined#/register');
 
-            cy.get('#emailControl').type(user.email);
-            cy.get('#passwordControl').type(user.password);
-            cy.get('#repeatPasswordControl').type(user.password);
+        cy.get('#emailControl').type(user.email);
+        cy.get('#passwordControl').type(user.password);
+        cy.get('#repeatPasswordControl').type(user.password);
 
-            cy.get('.mat-mdc-select-placeholder').click({ force: true });
-            cy.get('#mat-option-0').click({ force: true });
+        cy.get('.mat-mdc-select-placeholder').click({ force: true });
+        cy.get('#mat-option-0').click({ force: true });
 
-            cy.get('#securityAnswerControl').type('abc');
-            cy.get('#registerButton').click({ force: true });
-        } else {
-            // Login existing user
-            cy.get('[name="email"]').type(user.email);
-            cy.get('[name="password"]').type(user.password);
-            cy.get('#loginButton').click({ force: true });
-        }
+        cy.get('#securityAnswerControl').type('abc');
+        cy.get('#registerButton').click({ force: true });
+    } else {
+        // Login existing user
+        cy.get('[name="email"]').type(user.email);
+        cy.get('[name="password"]').type(user.password);
+        cy.get('#loginButton').click({ force: true });
+    }
 
-    }, {
-        validate() {
-            cy.request('/rest/user/whoami')
-                .its('status')
-                .should('eq', 200);
-        }
+}, {
+    validate() {
+        cy.request('/rest/user/whoami')
+            .its('status')
+            .should('eq', 200);
+    }
 
 });
 
@@ -143,7 +143,7 @@ Cypress.Commands.add('loginSession', (user) => {
     });
 });
 Cypress.Commands.add('logout', () => {
-  // Click the logout button
+    // Click the logout button
     cy.get('#navbarAccount > span.mat-mdc-button-touch-target').click({ force: true });
     cy.get('#navbarLogoutButton').click({ force: true });
 

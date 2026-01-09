@@ -85,5 +85,4 @@ jobs:
           install: false
           working-directory: cypress-automation-project
         env:
-          DEBUG: cypress:*
           CYPRESS_baseUrl: http://localhost:3000/#
