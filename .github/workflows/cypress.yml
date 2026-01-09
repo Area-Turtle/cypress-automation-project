@@ -83,6 +83,5 @@ jobs:
         with:
           browser: chrome
           working-directory: cypress-automation-project
-          command: run --reporter spec
         env:
           CYPRESS_baseUrl: http://localhost:3000/#
