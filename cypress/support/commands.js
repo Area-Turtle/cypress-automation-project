@@ -23,6 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+console.log('Commands loaded')
 
 Cypress.Commands.add('typeWithAnimations', (selector, text, wpm = 150) => {
     const delay = (60 / wpm) * 1000 / 5
@@ -151,8 +152,8 @@ Cypress.Commands.add('loginSession', (user) => {
 });
 Cypress.Commands.add('logout', () => {
     // Click the logout button
-    cy.get('#navbarAccount > span.mat-mdc-button-touch-target').click({ force: true });
-    cy.get('#navbarLogoutButton').click({ force: true });
+    cy.get('#navbarAccount > span.mat-mdc-button-touch-target').should('be.visible').click({ force: true });
+    cy.get('#navbarLogoutButton').should('be.visible').click({ force: true });
 
     // Confirm logout
     cy.url().should('include', 'undefined#/');
