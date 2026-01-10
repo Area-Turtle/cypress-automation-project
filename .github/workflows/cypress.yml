@@ -82,13 +82,8 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
+          install: false
           working-directory: cypress-automation-project
         env:
           CYPRESS_baseUrl: http://localhost:3000/#
-      
-      - name: Upload Cypress Screenshots
-        if: always()              # IMPORTANT
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+    
