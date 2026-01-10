@@ -26,7 +26,7 @@
 
 Cypress.Commands.add('typeWithAnimations', (selector, text, wpm = 150) => {
     const delay = (60 / wpm) * 1000 / 5
-    cy.get(selector).clear();
+    cy.get(selector).should('be.visible').clear();
     [...text].forEach((letter, index) => {
         cy.get(selector)
             .type(letter, { delay })
@@ -69,12 +69,10 @@ Cypress.Commands.add('checkHeaders', (extention) => {
 })
 
 Cypress.Commands.add('login', (user, { create = false } = {}) => {
-
     cy.visit(Cypress.env('baseUrl') + '#/login')
     if (create) {
         // Register new user
         cy.visit('/undefined#/register');
-
         cy.get('#emailControl')
         .should('be.visible').type(user.email);
         cy.get('#passwordControl')
@@ -86,7 +84,6 @@ Cypress.Commands.add('login', (user, { create = false } = {}) => {
         .should('be.visible').click({ force: true });
         cy.get('#mat-option-0')
         .should('be.visible').click({ force: true });
-
         cy.get('#securityAnswerControl')
         .should('be.visible').type('abc');
         cy.get('#registerButton')

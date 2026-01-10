@@ -3,10 +3,6 @@ describe('customer feedback spec', () => {
     cy.request(Cypress.env('baseUrl') + '#/contact')
       .should('have.property', 'status', 200);
   })
-  it.skip('basic cybersecurity headers', () => {
-    cy.checkHeaders('#/contact');
-
-  })
 
   it('completes customer feedback form', () => {
 
@@ -42,13 +38,16 @@ describe('customer feedback spec', () => {
     cy.request(Cypress.env('baseUrl') + '#/contact')
       .should('have.property', 'status', 200);
   })
-    it('opens on photo wall page', () => {
+  it('opens on photo wall page', () => {
     cy.request(Cypress.env('baseUrl') + '#/contact')
       .should('have.property', 'status', 200);
   })
-    it('opens on adelux membership page', () => {
+  it('opens on adelux membership page', () => {
     cy.request(Cypress.env('baseUrl') + '#/contact')
       .should('have.property', 'status', 200);
   })
+  it.skip('basic cybersecurity headers', () => {
+    cy.checkHeaders('#/contact');
 
+  })
 })
