@@ -75,28 +75,28 @@ Cypress.Commands.add('login', (user, { create = false } = {}) => {
         // Register new user
         cy.visit('/undefined#/register');
         cy.get('#emailControl')
-        .should('be.visible').type(user.email);
+            .should('be.visible').type(user.email);
         cy.get('#passwordControl')
-        .should('be.visible').type(user.password);
+            .should('be.visible').type(user.password);
         cy.get('#repeatPasswordControl')
-        .should('be.visible').type(user.password);
+            .should('be.visible').type(user.password);
 
         cy.get('.mat-mdc-select-placeholder')
-        .should('be.visible').click({ force: true });
+            .should('be.visible').click({ force: true });
         cy.get('#mat-option-0')
-        .should('be.visible').click({ force: true });
+            .should('be.visible').click({ force: true });
         cy.get('#securityAnswerControl')
-        .should('be.visible').type('abc');
+            .should('be.visible').type('abc');
         cy.get('#registerButton')
-        .should('be.visible').click({ force: true });
+            .should('be.visible').click({ force: true });
     } else {
         // Login existing user
         cy.get('[name="email"]')
-        .should('be.visible').type(user.email);
+            .should('be.visible').type(user.email);
         cy.get('[name="password"]')
-        .should('be.visible').type(user.password);
+            .should('be.visible').type(user.password);
         cy.get('#loginButton')
-        .should('be.visible').click({ force: true });
+            .should('be.visible').click({ force: true });
     }
 
 }, {
@@ -150,6 +150,7 @@ Cypress.Commands.add('loginSession', (user) => {
         }
     });
 });
+
 Cypress.Commands.add('logout', () => {
     // Click the logout button
     cy.get('#navbarAccount > span.mat-mdc-button-touch-target').should('be.visible').click({ force: true });
@@ -158,6 +159,81 @@ Cypress.Commands.add('logout', () => {
     // Confirm logout
     cy.url().should('include', 'undefined#/');
 });
+
+Cypress.Commands.add('isComplaintFeatureAvailable', () => {
+    // Open sidebar menu if collapsed
+    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
+
+    // Check if "Complaint" menu item exists and is visible
+    return cy.get('.mat-mdc-nav-list')
+        .contains('Complaint')
+        .then($el => {
+            const visible = $el.is(':visible')
+            if (visible) {
+                cy.log('Complaint feature is visible in sidebar')
+            } else {
+                cy.log('Complaint feature is NOT visible in sidebar')
+            }
+            return cy.wrap(visible)
+        })
+})
+
+Cypress.Commands.add('sidebarAccess', (extention) => {
+  cy.window().then(win => {
+  const token = win.localStorage.getItem('token')
+  const decoded = atob(token.split('.')[1])
+  const lines = decoded.replace(/^{|}$/g, '').split(',')
+  const cred = lines.some(line => ['"role":"admin"', '"role":"customer"', '"role":"deluxe"'].includes(line.trim())) ? 1 : 0
+
+  return cred
+}).then(cred => {
+  // Now you can safely use cred in Cypress commands
+  if (cred === 1) {
+    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
+    cy.get(`[routerlink="/${extention}"]`).click({ force: true })
+  } else {
+    cy.log('Not allowed')
+  }
+})
+})
+
+Cypress.Commands.add('assertComplaintAccess', () => {
+    // Open sidebar menu
+    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
+
+    // Wait for sidebar to render
+    cy.get('.mat-mdc-nav-list', { timeout: 5000 }).should('be.visible')
+
+    // Get the current user role
+    cy.getUserRole().then(role => {
+        const allowedRoles = ['admin', 'customer', 'deluxe']
+
+        if (allowedRoles.includes(role)) {
+            // Open sidebar if collapsed
+            cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
+
+            // Wait for sidebar to render
+            cy.get('.mat-mdc-nav-list', { timeout: 5000 }).should('be.visible')
+
+            // Find and click the Complaint menu safely
+            cy.get('.mat-mdc-nav-list')
+                .contains('span.mat-list-text', 'Complain')
+                .scrollIntoView()
+                .should('be.visible')
+                .click({ force: true })
+
+            cy.log(`Role "${role}" CAN see and clicked the Complaint menu`)
+
+        } else {
+            // For non-allowed roles
+            cy.get('.mat-mdc-nav-list')
+                .contains('span.mat-list-text', 'Complain')
+                .should('not.exist')
+
+            cy.log(`Role "${role}" CANNOT see Complaint menu (expected)`)
+        }
+    })
+})
 
 
 
