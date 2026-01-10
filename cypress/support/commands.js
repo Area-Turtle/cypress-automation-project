@@ -75,20 +75,30 @@ Cypress.Commands.add('login', (user, { create = false } = {}) => {
         // Register new user
         cy.visit('/undefined#/register');
 
-        cy.get('#emailControl').type(user.email);
-        cy.get('#passwordControl').type(user.password);
-        cy.get('#repeatPasswordControl').type(user.password);
+        cy.get('#emailControl')
+        .should('be.visible').type(user.email);
+        cy.get('#passwordControl')
+        .should('be.visible').type(user.password);
+        cy.get('#repeatPasswordControl')
+        .should('be.visible').type(user.password);
 
-        cy.get('.mat-mdc-select-placeholder').click({ force: true });
-        cy.get('#mat-option-0').click({ force: true });
+        cy.get('.mat-mdc-select-placeholder')
+        .should('be.visible').click({ force: true });
+        cy.get('#mat-option-0')
+        .should('be.visible').click({ force: true });
 
-        cy.get('#securityAnswerControl').type('abc');
-        cy.get('#registerButton').click({ force: true });
+        cy.get('#securityAnswerControl')
+        .should('be.visible').type('abc');
+        cy.get('#registerButton')
+        .should('be.visible').click({ force: true });
     } else {
         // Login existing user
-        cy.get('[name="email"]').type(user.email);
-        cy.get('[name="password"]').type(user.password);
-        cy.get('#loginButton').click({ force: true });
+        cy.get('[name="email"]')
+        .should('be.visible').type(user.email);
+        cy.get('[name="password"]')
+        .should('be.visible').type(user.password);
+        cy.get('#loginButton')
+        .should('be.visible').click({ force: true });
     }
 
 }, {
