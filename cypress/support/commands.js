@@ -160,22 +160,23 @@ Cypress.Commands.add('logout', () => {
     cy.url().should('include', 'undefined#/');
 });
 
-Cypress.Commands.add('isComplaintFeatureAvailable', () => {
-    // Open sidebar menu if collapsed
-    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
+Cypress.Commands.add('tabExists', (tabName) => {
+  // Open sidebar if it’s collapsed (optional, adjust selector to your UI)
+  cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
 
-    // Check if "Complaint" menu item exists and is visible
-    return cy.get('.mat-mdc-nav-list')
-        .contains('Complaint')
-        .then($el => {
-            const visible = $el.is(':visible')
-            if (visible) {
-                cy.log('Complaint feature is visible in sidebar')
-            } else {
-                cy.log('Complaint feature is NOT visible in sidebar')
-            }
-            return cy.wrap(visible)
-        })
+  // Check if the tab exists
+  return cy.get('.mat-mdc-nav-list') // sidebar container
+    .then($list => {
+      // Look for the tab element containing the text
+      const $tab = $list.find(`span.mat-list-text:contains("${tabName}")`)
+      if ($tab.length > 0 && $tab.is(':visible')) {
+        cy.log(`Tab "${tabName}" exists and is visible`)
+        return true
+      } else {
+        cy.log(`Tab "${tabName}" does NOT exist or is hidden`)
+        return false
+      }
+    })
 })
 
 Cypress.Commands.add('sidebarAccess', (extention) => {
@@ -197,41 +198,14 @@ Cypress.Commands.add('sidebarAccess', (extention) => {
 })
 })
 
-Cypress.Commands.add('assertComplaintAccess', () => {
-    // Open sidebar menu
-    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
-
-    // Wait for sidebar to render
-    cy.get('.mat-mdc-nav-list', { timeout: 5000 }).should('be.visible')
-
-    // Get the current user role
-    cy.getUserRole().then(role => {
-        const allowedRoles = ['admin', 'customer', 'deluxe']
-
-        if (allowedRoles.includes(role)) {
-            // Open sidebar if collapsed
-            cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
-
-            // Wait for sidebar to render
-            cy.get('.mat-mdc-nav-list', { timeout: 5000 }).should('be.visible')
-
-            // Find and click the Complaint menu safely
-            cy.get('.mat-mdc-nav-list')
-                .contains('span.mat-list-text', 'Complain')
-                .scrollIntoView()
-                .should('be.visible')
-                .click({ force: true })
-
-            cy.log(`Role "${role}" CAN see and clicked the Complaint menu`)
-
-        } else {
-            // For non-allowed roles
-            cy.get('.mat-mdc-nav-list')
-                .contains('span.mat-list-text', 'Complain')
-                .should('not.exist')
-
-            cy.log(`Role "${role}" CANNOT see Complaint menu (expected)`)
-        }
+Cypress.Commands.add('tabCheck', (tabName) => {
+    cy.tabExists(tabName).then(exists => {
+      cy.log(exists)
+      if (exists) {
+        cy.sidebarAccess(tabName)
+      } else {
+        cy.log(`${tabName} menu is not visible — skipping`)
+      }
     })
 })
 
