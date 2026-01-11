@@ -1,14 +1,3 @@
-const user = {
-    email: Cypress.env('userEmail'),
-    password: Cypress.env('userPassword')
-}
-const user2 = {
-    email: Cypress.env('userEmail'),
-    password: 'WrongPassword!'
-}
-
-
-
 describe('landing page spec', () => {
     it('opens on login page', () => {
         cy.visit(Cypress.env('baseUrl') + '#/login')

@@ -1,7 +1,3 @@
-const user2 = {
-  email: 'bjoern.kimminich@gmail.com',
-  password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
-}
 function fillComplaint(message, user) {
   cy.get('#mat-input-4')
     .should('be.disabled').and('have.value', user.email)
