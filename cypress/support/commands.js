@@ -160,52 +160,58 @@ Cypress.Commands.add('logout', () => {
     cy.url().should('include', 'undefined#/');
 });
 
+// 
 Cypress.Commands.add('tabExists', (tabName) => {
-  // Open sidebar if it’s collapsed (optional, adjust selector to your UI)
-  cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
+    // Open sidebar if it’s collapsed (optional, adjust selector to your UI)
+    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
 
-  // Check if the tab exists
-  return cy.get('.mat-mdc-nav-list') // sidebar container
-    .then($list => {
-      // Look for the tab element containing the text
-      const $tab = $list.find(`span.mat-list-text:contains("${tabName}")`)
-      if ($tab.length > 0 && $tab.is(':visible')) {
-        cy.log(`Tab "${tabName}" exists and is visible`)
-        return true
-      } else {
-        cy.log(`Tab "${tabName}" does NOT exist or is hidden`)
-        return false
-      }
-    })
+    // Check if the tab exists
+    return cy.get('.mat-mdc-nav-list') // sidebar container
+        .then($list => {
+            // Look for the tab element containing the text
+            //const $tab = $list.find(`span.mat-list-text:contains("${tabName}")`)
+            //const $tab = $list.find(`span.mat-list-text:contains("about")`)
+   const $tab = $list.find('span.mat-list-text')
+    .filter((i, el) => Cypress.$(el).text().trim().toLowerCase() === tabName.toLowerCase())
+                cy.log($list.find('span.mat-list'))
+                cy.log(tabName)
+            if ($tab.length > 0 && $tab.is(':visible')) {
+                cy.log(`Tab "${tabName}" exists and is visible`)
+                return true
+            } else {
+                cy.log(`Tab "${tabName}" does NOT exist or is hidden`)
+                return false
+            }
+        })
 })
 
 Cypress.Commands.add('sidebarAccess', (extention) => {
-  cy.window().then(win => {
-  const token = win.localStorage.getItem('token')
-  const decoded = atob(token.split('.')[1])
-  const lines = decoded.replace(/^{|}$/g, '').split(',')
-  const cred = lines.some(line => ['"role":"admin"', '"role":"customer"', '"role":"deluxe"'].includes(line.trim())) ? 1 : 0
+    cy.window().then(win => {
+        const token = win.localStorage.getItem('token')
+        const decoded = atob(token.split('.')[1])
+        const lines = decoded.replace(/^{|}$/g, '').split(',')
+        const cred = lines.some(line => ['"role":"admin"', '"role":"customer"', '"role":"deluxe"'].includes(line.trim())) ? 1 : 0
 
-  return cred
-}).then(cred => {
-  // Now you can safely use cred in Cypress commands
-  if (cred === 1) {
-    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
-    cy.get(`[routerlink="/${extention}"]`).click({ force: true })
-  } else {
-    cy.log('Not allowed')
-  }
-})
+        return cred
+    }).then(cred => {
+        // Now you can safely use cred in Cypress commands
+        if (cred === 1) {
+            cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
+            cy.get(`[routerlink="/${extention}"]`).click({ force: true })
+        } else {
+            cy.log('Not allowed')
+        }
+    })
 })
 
 Cypress.Commands.add('tabCheck', (tabName) => {
     cy.tabExists(tabName).then(exists => {
-      cy.log(exists)
-      if (exists) {
-        cy.sidebarAccess(tabName)
-      } else {
-        cy.log(`${tabName} menu is not visible — skipping`)
-      }
+        cy.log(exists)
+        if (exists) {
+            cy.sidebarAccess(tabName)
+        } else {
+            cy.log(`${tabName} menu is not visible — skipping`)
+        }
     })
 })
 

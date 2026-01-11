@@ -1,0 +1,11 @@
+{
+  "customer": {
+      "email": "userEmail",
+      "password": "userPassword"
+  },
+  "admin": {
+    "email": "bjoern.kimminich@gmail.com",
+    "password": "bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI=",
+    "role":"admin"
+  }
+}
