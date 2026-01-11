@@ -18,8 +18,8 @@ module.exports = defineConfig({
 
     specPattern: [
       '**/**/LANDINGPAGE_spec.js',
-      '**/**SIDEBAR_spec.js',
       '**/**/LOGIN_spec.js',
+      '**/**SIDEBAR_spec.js',
       '**/**/FEATURES_spec.js',
       '**/**/SMOKE_spec.js'
     ],

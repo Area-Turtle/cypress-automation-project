@@ -1,3 +1,7 @@
+const user = {
+    email: Cypress.env('userEmail'),
+    password: Cypress.env('userPassword')
+}
 const user2 = {
     email: Cypress.env('userEmail'),
     password: 'WrongPassword!'
@@ -13,36 +17,43 @@ describe('landing page spec', () => {
     })
 
     it('create new user', () => {
-        cy.login({
-            email: Cypress.env('userEmail'),
-            password: Cypress.env('userPassword')
-        },
-        { create: true });
+        cy.fixture('testUsers').then(testUsers => {
+            const customer = {
+                email: Cypress.env(testUsers.customer.email),
+                password: Cypress.env(testUsers.customer.password)
+            }
+            cy.login(customer, { create: true })
+        })
     });
 
     it('login with user', () => {
-        cy.login({
-            email: Cypress.env('userEmail'),
-            password: Cypress.env('userPassword')
-        },
-            { create: false });
-
+        cy.fixture('testUsers').then(testUsers => {
+            const customer = {
+                email: Cypress.env(testUsers.customer.email),
+                password: Cypress.env(testUsers.customer.password)
+            }
+            cy.login(customer, { create: false })
+        })
     });
     it('login/logout', () => {
-        cy.login({
-            email: Cypress.env('userEmail'),
-            password: Cypress.env('userPassword')
-        },
-            { create: false });
-            cy.wait(1000)
+        cy.fixture('testUsers').then(testUsers => {
+            const customer = {
+                email: Cypress.env(testUsers.customer.email),
+                password: Cypress.env(testUsers.customer.password)
+            }
+            cy.login(customer, { create: false })
+        })
+        cy.wait(1000)
         cy.logout()
     })
     it('login with invalid', () => {
-        cy.login({
-            email: Cypress.env('userEmail'),
-            password: user2.password
-        },
-            { create: false });
+        cy.fixture('testUsers').then(testUsers => {
+            const customer = {
+                email: Cypress.env(testUsers.customer.email),
+                password: 'wrongPassword!'
+            }
+            cy.login(customer, { create: false })
+        })
         cy.get('.error').should('be.visible');
 
     })
