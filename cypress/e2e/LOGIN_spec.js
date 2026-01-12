@@ -4,8 +4,7 @@ describe('landing page spec', () => {
         cy.request(Cypress.env('baseUrl') + '#/login')
             .should('have.property', 'status', 200);
     })
-
-    it('create new user', () => {
+    it('loginPOM with user', () => {
         cy.fixture('testUsers').then(testUsers => {
             const customer = {
                 email: Cypress.env(testUsers.customer.email),
@@ -14,8 +13,7 @@ describe('landing page spec', () => {
             cy.login(customer, { create: true })
         })
     });
-
-    it('login with user', () => {
+    it('loginPOM with user', () => {
         cy.fixture('testUsers').then(testUsers => {
             const customer = {
                 email: Cypress.env(testUsers.customer.email),
@@ -24,6 +22,7 @@ describe('landing page spec', () => {
             cy.login(customer, { create: false })
         })
     });
+
     it('login/logout', () => {
         cy.fixture('testUsers').then(testUsers => {
             const customer = {
@@ -48,13 +47,22 @@ describe('landing page spec', () => {
     })
 
     it('session persistence', () => {
-        cy.loginSession(user)
+        cy.fixture('testUsers').then(testUsers => {
+            const customer = {
+                email: Cypress.env(testUsers.customer.email),
+                password: Cypress.env(testUsers.customer.password)
+            }
+            // cy.login(customer, { create: false })
+            cy.loginSession(customer)
+        })
+        
+    })
+
+
+    it.skip('basic cybersecurity headers', () => {
+        cy.visit(Cypress.env('baseUrl') + '#/login')
+        cy.checkHeaders('/#/login');
 
     })
-    // it.skip('basic cybersecurity headers', () => {
-    //     cy.visit(Cypress.env('baseUrl') + '#/login')
-    //     cy.checkHeaders('/#/login');
-
-    // })
 
 })
