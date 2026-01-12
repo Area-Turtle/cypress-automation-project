@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 console.log('Commands loaded')
 
+
 Cypress.Commands.add('typeWithAnimations', (selector, text, wpm = 150) => {
     const delay = (60 / wpm) * 1000 / 5
     cy.get(selector).should('be.visible').clear();
@@ -108,6 +109,22 @@ Cypress.Commands.add('login', (user, { create = false } = {}) => {
 
 });
 
+Cypress.Commands.add('loginPOM', (user, { create = false } = {}) => {
+  cy.visit(Cypress.env('baseUrl') + '#/login')
+
+  if (create) {
+    cy.visit('/undefined#/register')
+    RegisterForm.register(user)
+  } else {
+    LoginForm.fill(user.email, user.password)
+    LoginForm.submit()
+  }
+
+}, {
+  validate() {
+    cy.request('/rest/user/whoami').its('status').should('eq', 200)
+  }
+})
 Cypress.Commands.add('loginSession', (user) => {
     cy.visit(Cypress.env('baseUrl') + '#/login')
     cy.session(user.email, () => {
@@ -171,8 +188,8 @@ Cypress.Commands.add('tabExists', (tabName) => {
             // Look for the tab element containing the text
             //const $tab = $list.find(`span.mat-list-text:contains("${tabName}")`)
             //const $tab = $list.find(`span.mat-list-text:contains("about")`)
-   const $tab = $list.find('span.mat-list-text')
-    .filter((i, el) => Cypress.$(el).text().trim().toLowerCase() === tabName.toLowerCase())
+            const $tab = $list.find('span.mat-list-text')
+                .filter((i, el) => Cypress.$(el).text().trim().toLowerCase() === tabName.toLowerCase())
                 cy.log($list.find('span.mat-list'))
                 cy.log(tabName)
             if ($tab.length > 0 && $tab.is(':visible')) {

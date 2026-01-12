@@ -10,7 +10,7 @@ describe('landing page spec', () => {
                 email: Cypress.env(testUsers.customer.email),
                 password: Cypress.env(testUsers.customer.password)
             }
-            cy.login(customer, { create: true })
+            cy.loginPOM(customer, { create: true })
         })
     });
     it('loginPOM with user', () => {
@@ -19,7 +19,7 @@ describe('landing page spec', () => {
                 email: Cypress.env(testUsers.customer.email),
                 password: Cypress.env(testUsers.customer.password)
             }
-            cy.login(customer, { create: false })
+            cy.loginPOM(customer, { create: false })
         })
     });
 
