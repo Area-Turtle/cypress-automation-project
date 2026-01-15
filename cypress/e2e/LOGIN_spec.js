@@ -1,3 +1,6 @@
+import LoginPage from '../pages/login.page.js'
+const loginPage = new LoginPage()
+
 describe('landing page spec', () => {
     it('opens on login page', () => {
         cy.visit(Cypress.env('baseUrl') + '#/login')
@@ -10,7 +13,7 @@ describe('landing page spec', () => {
                 email: Cypress.env(testUsers.customer.email),
                 password: Cypress.env(testUsers.customer.password)
             }
-            cy.login(customer, { create: true })
+            loginPage.login(customer, { create: true })
         })
     });
     it('loginPOM with user', () => {
@@ -19,7 +22,7 @@ describe('landing page spec', () => {
                 email: Cypress.env(testUsers.customer.email),
                 password: Cypress.env(testUsers.customer.password)
             }
-            cy.login(customer, { create: false })
+            loginPage.login(customer, { create: false })
         })
     });
 
@@ -29,7 +32,7 @@ describe('landing page spec', () => {
                 email: Cypress.env(testUsers.customer.email),
                 password: Cypress.env(testUsers.customer.password)
             }
-            cy.login(customer, { create: false })
+            loginPage.login(customer, { create: false })
         })
         cy.wait(1000)
         cy.logout()
@@ -40,7 +43,7 @@ describe('landing page spec', () => {
                 email: Cypress.env(testUsers.customer.email),
                 password: 'wrongPassword!'
             }
-            cy.login(customer, { create: false })
+            loginPage.login(customer, { create: false })
         })
         cy.get('.error').should('be.visible');
 
@@ -53,9 +56,9 @@ describe('landing page spec', () => {
                 password: Cypress.env(testUsers.customer.password)
             }
             // cy.login(customer, { create: false })
-            cy.loginSession(customer)
+            loginPage.login(customer, { create: false })
         })
-        
+
     })
 
 

@@ -1,20 +1,31 @@
 // cypress/support/commands.js
-import LoginForm from '../components/loginForm.component'
-import RegisterForm from '../components/registerForm.component'
+import LoginForm from '../components/login.component.js'
+import RegisterForm from '../components/registration.component.js'
 
-Cypress.Commands.add('loginPOM', (user, { create = false } = {}) => {
-  cy.visit(Cypress.env('baseUrl') + '#/login')
-
-  if (create) {
-    cy.visit('/undefined#/register')
-    RegisterForm.register(user)
-  } else {
-    LoginForm.fill(user.email, user.password)
-    LoginForm.submit()
+class LoginPage {
+  visit() {
+    cy.visit(Cypress.env('baseUrl') + '#/login')
   }
 
-}, {
-  validate() {
-    cy.request('/rest/user/whoami').its('status').should('eq', 200)
+  login(user, { create = false } = {}) {
+    this.visit()
+
+    if (create) {
+      cy.visit('/undefined#/register')
+      RegisterForm.register(user)
+    } else {
+      LoginForm.fill(user.email, user.password)
+      LoginForm.submit()
+    }
+
+    this.validateLogin()
   }
-})
+
+  validateLogin() {
+    cy.request('/rest/user/whoami')
+      .its('status')
+      .should('eq', 200)
+  }
+}
+
+export default LoginPage
