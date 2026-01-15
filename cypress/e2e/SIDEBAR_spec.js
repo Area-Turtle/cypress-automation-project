@@ -1,7 +1,3 @@
-const user2 = {
-  email: 'bjoern.kimminich@gmail.com',
-  password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI='
-}
 function fillComplaint(message, user) {
   cy.get('#mat-input-4')
     .should('be.disabled').and('have.value', user.email)
@@ -15,6 +11,13 @@ function tabSelect(link) {
     .should('have.property', 'status', 200);
   cy.get('.mat-mdc-card > .mdc-card').should('be.visible')
 }
+import LoginPage from '../pages/login.page.js'
+import SideBarPage from '../pages/sidebar.page.js'
+const loginPage = new LoginPage()
+const sideBarPage = new SideBarPage()
+
+
+
 
 describe('customer feedback spec', () => {
   it('selects sidebar and it opens', () => {
@@ -24,33 +27,16 @@ describe('customer feedback spec', () => {
   })
 
   it('completes customer feedback form', () => {
-    cy.visit(Cypress.env('baseUrl') + '#/contact')
-    cy.wait(1000)
-    //comment text
-    cy.typeWithAnimations('#comment', 'the bad stuff')
-    //slider
-    cy.get('.mdc-slider__input').click()
-    // captcha values
-    cy.get('#captcha')
-      .then(($el) => {
-        const equationText = $el.text().trim()
-        cy.log('captcha contents', equationText)
-        const result = eval(equationText)
-        cy.log('results', result)
-
-        cy.get('#feedback-form > mat-form-field:nth-child(6) > div.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--outlined').type(result)
-      })
-
-    //submit form
-    cy.get('#submitButton > .mat-mdc-button-touch-target').click({ force: true })
+    sideBarPage.navigateToFeedBack()
 
   })
 
   it('should block non-customers from Complaint page', () => {
     // Log in as a normal user
+
     cy.tabExists('Complaint').then(exists => {
       if (exists) {
-        cy.sidebarAccess('complain')
+        sideBarPage.navigateToComplaints()
       } else {
         cy.log('Tab not available — skipping click')
       }
@@ -108,7 +94,7 @@ describe('customer feedback spec', () => {
 
   })
 
-    it('should block non-customers from deluxe page', () => {
+  it('should block non-customers from deluxe page', () => {
     // Log in as a normal user
     cy.tabExists('deluxe').then(exists => {
       if (exists) {
@@ -133,21 +119,21 @@ describe('customer feedback spec', () => {
       cy.get('.deluxe-membership > .card-text > .item-name').should('be.visible')
     })
   });
-})
-  // it('login with user', () => {
-  //   cy.fixture('testUsers').then(testUsers => {
-  //     const customer = {
-  //       email: Cypress.env(testUsers.customer.email),
-  //       password: Cypress.env(testUsers.customer.password)
-  //     }
-  //     cy.login(customer, { create: false })
-  //     cy.sidebarAccess('deluxe-membership')
-  //     cy.get('.deluxe-membership > .card-text > .item-name').should('be.visible')
-  //   })
-  //   cy.visit('/#/administration')
-  //   cy.contains('Administration').should('be.visible')
-  // });
-  // it.skip('basic cybersecurity headers', () => {
-  //   cy.checkHeaders('#/contact');
-  // })
+
+// it.skip('login with user', () => {
+//   cy.fixture('testUsers').then(testUsers => {
+//     const customer = {
+//       email: Cypress.env(testUsers.customer.email),
+//       password: Cypress.env(testUsers.customer.password)
+//     }
+//     cy.login(customer, { create: false })
+//     cy.sidebarAccess('deluxe-membership')
+//     cy.get('.deluxe-membership > .card-text > .item-name').should('be.visible')
+//   })
+//   cy.visit('/#/administration')
+//   cy.contains('Administration').should('be.visible')
+// });
+// it.skip('basic cybersecurity headers', () => {
+//   cy.checkHeaders('#/contact');
 // })
+})
