@@ -16,7 +16,7 @@ class Sidebar {
   // Select a menu item by name, only if visible
   selectMenuItem(name) {
     let tempName = " "
-    this.open()
+    // this.open()
     if (name == 'contact'){tempName = 'Customer Feedback'}
     else if (name == 'complain'){tempName = 'Complaint'}
     else if (name == 'chatbot'){tempName = 'Support Chat'}
@@ -84,10 +84,11 @@ class Sidebar {
   }
 
   goToSupportChat() {
-    this.selectMenuItem('chatbot')
+    
     this.isTabVisible('chatbot').then(isVisible => {
       if (isVisible) {
         cy.log('chat-bot tab is visible')
+        this.selectMenuItem('chatbot')
         // continue actions here
       } else {
         throw new Error('chat-bot tab is not visible')
@@ -95,10 +96,11 @@ class Sidebar {
     })
   }
   goToAboutUs() {
-    this.selectMenuItem('about')
+    
     this.isTabVisible('about').then(isVisible => {
       if (isVisible) {
         cy.log('about tab is visible')
+        this.selectMenuItem('about')
         // continue actions here
       } else {
         throw new Error('about tab is not visible')
@@ -106,10 +108,11 @@ class Sidebar {
     })
   }
   goToPhotoWall() {
-    this.selectMenuItem('photo-wall')
+    
     this.isTabVisible('photo-wall').then(isVisible => {
       if (isVisible) {
         cy.log('Complaint tab is visible')
+        this.selectMenuItem('photo-wall')
         // continue actions here
       } else {
         throw new Error('Complaint tab is not visible')
@@ -117,10 +120,11 @@ class Sidebar {
     })
   }
   goToDeluxe() {
-    this.selectMenuItem('deluxe-membership')
+    
     this.isTabVisible('deluxe-membership').then(isVisible => {
       if (isVisible) {
         cy.log('deluxe-membership tab is visible')
+        this.selectMenuItem('deluxe-membership')
         // continue actions here
       } else {
         throw new Error('deluxe-membership tab is not visible')
