@@ -1,21 +1,29 @@
-class feedback {
+class Feedback {
     // cy.visit(Cypress.env('baseUrl') + '#/contact')
-    // cy.wait(1000)
-    // //comment text
-    // cy.typeWithAnimations('#comment', 'the bad stuff')
-    // //slider
-    // cy.get('.mdc-slider__input').click()
-    // // captcha values
-    // cy.get('#captcha')
-    //   .then(($el) => {
-    //     const equationText = $el.text().trim()
-    //     cy.log('captcha contents', equationText)
-    //     const result = eval(equationText)
-    //     cy.log('results', result)
+    enterComment(text) {
+        cy.get('#comment').should('be.visible').clear().type(text)
+    }
+    selectSlider() {
+        cy.get('.mdc-slider__input').click()
+    }
+    solveCaptcha() {
+        cy.get('#captcha').should('be.visible')
+            .then(($el) => {
+                const equationText = $el.text().trim()
+                const result = eval(equationText)
+                cy.log('results', result)
 
-    //     cy.get('#feedback-form > mat-form-field:nth-child(6) > div.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--outlined').type(result)
-    //   })
-
-    // //submit form
-    // cy.get('#submitButton > .mat-mdc-button-touch-target').click({ force: true })
+                cy.get('#feedback-form > mat-form-field:nth-child(6) > div.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--outlined').type(result)
+            })
+    }
+    selectSubmit() {
+        cy.get('#submitButton > .mat-mdc-button-touch-target').should('not.be.disabled').click({ force: true })
+    }
+    completeFeedback(text){
+        this.enterComment(text)
+        this.selectSlider()
+        this.solveCaptcha()
+        this.selectSubmit()
+    }
 }
+export default new Feedback()

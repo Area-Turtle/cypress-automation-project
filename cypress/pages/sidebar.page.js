@@ -4,13 +4,13 @@ class SideBarPage {
   visit() {
     cy.visit(Cypress.env('baseUrl')+'#/')
   }
-  navigateToFeedBack() {
+  navigateToFeedBack(text) {
     this.visit()
-    Sidebar.goToFeedBack()
+    Sidebar.goToFeedBack(text)
   }
-  navigateToComplaints() {
+  navigateToComplaints(email,message) {
     this.visit()
-    Sidebar.goToComplaints()
+    Sidebar.goToComplaints(email,message)
   }
   navigateToSupportChat() {
     this.visit()
@@ -23,6 +23,10 @@ class SideBarPage {
   navigateToPhotoWall() {
     this.visit()
     Sidebar.goToPhotoWall()
+  }
+  navigateToDeluxe(){
+    this.visit()
+    Sidebar.goToDeluxe()
   }
 }
 
