@@ -27,13 +27,11 @@ describe('customer feedback spec', () => {
   })
 
   it('completes customer feedback form', () => {
-    sideBarPage.navigateToFeedBack()
-
+    sideBarPage.navigateToFeedBack('test input')
   })
 
   it('should block non-customers from Complaint page', () => {
     // Log in as a normal user
-
     cy.tabExists('Complaint').then(exists => {
       if (exists) {
         sideBarPage.navigateToComplaints()
@@ -51,17 +49,18 @@ describe('customer feedback spec', () => {
         email: Cypress.env(testUsers.customer.email),
         password: Cypress.env(testUsers.customer.password)
       }
-      cy.login(customer, { create: false })
-      cy.sidebarAccess('complain')
-      fillComplaint('abc', customer)
+      loginPage.login(customer, { create: false })
+      sideBarPage.navigateToComplaints(customer.email, 'abc')
     })
 
   })
+
+  // })
   it('should block non-customers from chatbot page', () => {
     // Log in as a normal user
-    cy.tabExists('Complaint').then(exists => {
+    cy.tabExists('chatbot').then(exists => {
       if (exists) {
-        cy.sidebarAccess('chatbot')
+        sideBarPage.navigateToSupportChat()
       } else {
         cy.log('Tab not available — skipping click')
       }
@@ -75,21 +74,17 @@ describe('customer feedback spec', () => {
         email: Cypress.env(testUsers.customer.email),
         password: Cypress.env(testUsers.customer.password)
       }
-      cy.login(customer, { create: false })
-      cy.sidebarAccess('chatbot')
+      loginPage.login(customer, { create: false })
+      sideBarPage.navigateToSupportChat()
     })
   });
 
   it('opens on about us page', () => {
-    cy.request(Cypress.env('baseUrl') + '#')
-      .should('have.property', 'status', 200);
-    tabSelect('about')
+    sideBarPage.navigateToAboutUs()
     cy.get('#corporate-history').should('be.visible')
   })
   it('opens on photo wall page', () => {
-    cy.request(Cypress.env('baseUrl') + '#')
-      .should('have.property', 'status', 200);
-    tabSelect('photo-wall')
+    sideBarPage.navigateToPhotoWall()
     cy.get('h1').should('be.visible')
 
   })
@@ -98,7 +93,7 @@ describe('customer feedback spec', () => {
     // Log in as a normal user
     cy.tabExists('deluxe').then(exists => {
       if (exists) {
-        cy.sidebarAccess('deluxe-membership')
+        sideBarPage.navigateToDeluxe()
       } else {
         cy.log('Tab not available — skipping click')
       }
@@ -107,33 +102,33 @@ describe('customer feedback spec', () => {
   })
 
   it('opens on deluxe membership page', () => {
-    cy.request(Cypress.env('baseUrl') + '#/contact')
+    cy.request(Cypress.env('baseUrl') + '#')
       .should('have.property', 'status', 200);
     cy.fixture('testUsers').then(testUsers => {
-      const customer = {
-        email: Cypress.env(testUsers.customer.email),
-        password: Cypress.env(testUsers.customer.password)
+      const admin = {
+        email: testUsers.admin.email,
+        password: testUsers.admin.password
       }
-      cy.login(customer, { create: false })
-      cy.sidebarAccess('deluxe-membership')
+      loginPage.login(admin, { create: false })
+      sideBarPage.navigateToDeluxe()
       cy.get('.deluxe-membership > .card-text > .item-name').should('be.visible')
     })
   });
 
-// it.skip('login with user', () => {
-//   cy.fixture('testUsers').then(testUsers => {
-//     const customer = {
-//       email: Cypress.env(testUsers.customer.email),
-//       password: Cypress.env(testUsers.customer.password)
-//     }
-//     cy.login(customer, { create: false })
-//     cy.sidebarAccess('deluxe-membership')
-//     cy.get('.deluxe-membership > .card-text > .item-name').should('be.visible')
-//   })
-//   cy.visit('/#/administration')
-//   cy.contains('Administration').should('be.visible')
-// });
-// it.skip('basic cybersecurity headers', () => {
-//   cy.checkHeaders('#/contact');
-// })
+  // it.skip('login with user', () => {
+  //   cy.fixture('testUsers').then(testUsers => {
+  //     const customer = {
+  //       email: Cypress.env(testUsers.customer.email),
+  //       password: Cypress.env(testUsers.customer.password)
+  //     }
+  //     cy.login(customer, { create: false })
+  //     cy.sidebarAccess('deluxe-membership')
+  //     cy.get('.deluxe-membership > .card-text > .item-name').should('be.visible')
+  //   })
+  //   cy.visit('/#/administration')
+  //   cy.contains('Administration').should('be.visible')
+  // });
+  // it.skip('basic cybersecurity headers', () => {
+  //   cy.checkHeaders('#/contact');
+  // })
 })

@@ -1,4 +1,4 @@
-class feedback {
+class Feedback {
     // cy.visit(Cypress.env('baseUrl') + '#/contact')
     enterComment(text) {
         cy.get('#comment').should('be.visible').clear().type(text)
@@ -17,7 +17,7 @@ class feedback {
             })
     }
     selectSubmit() {
-        cy.get('#submitButton > .mat-mdc-button-touch-target').should('be.enabled').click({ force: true })
+        cy.get('#submitButton > .mat-mdc-button-touch-target').should('not.be.disabled').click({ force: true })
     }
     completeFeedback(text){
         this.enterComment(text)
@@ -26,4 +26,4 @@ class feedback {
         this.selectSubmit()
     }
 }
-export default new feedback()
+export default new Feedback()
