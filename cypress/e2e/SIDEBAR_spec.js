@@ -69,14 +69,9 @@ describe('customer feedback spec', () => {
   })
   it('should allow customers to access chatbot page', () => {
     //Log in as admin
-    cy.fixture('testUsers').then(testUsers => {
-      const customer = {
-        email: Cypress.env(testUsers.customer.email),
-        password: Cypress.env(testUsers.customer.password)
-      }
-      loginPage.login(customer, { create: false })
-      sideBarPage.navigateToSupportChat()
-    })
+    cy.login()
+    sideBarPage.navigateToSupportChat()
+
   });
 
   it('opens on about us page', () => {

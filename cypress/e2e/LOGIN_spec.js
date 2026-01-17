@@ -7,34 +7,15 @@ describe('landing page spec', () => {
         cy.request(Cypress.env('baseUrl') + '#/login')
             .should('have.property', 'status', 200);
     })
-    it('loginPOM with user', () => {
-        cy.fixture('testUsers').then(testUsers => {
-            const customer = {
-                email: Cypress.env(testUsers.customer.email),
-                password: Cypress.env(testUsers.customer.password)
-            }
-            loginPage.login(customer, { create: true })
-        })
+    it('create new user', () => {
+        cy.login('customer',{ create: true })
     });
-    it('loginPOM with user', () => {
-        cy.fixture('testUsers').then(testUsers => {
-            const customer = {
-                email: Cypress.env(testUsers.customer.email),
-                password: Cypress.env(testUsers.customer.password)
-            }
-            loginPage.login(customer, { create: false })
-        })
+    it('login with user', () => {
+       cy.login()
     });
 
     it('login/logout', () => {
-        cy.fixture('testUsers').then(testUsers => {
-            const customer = {
-                email: Cypress.env(testUsers.customer.email),
-                password: Cypress.env(testUsers.customer.password)
-            }
-            loginPage.login(customer, { create: false })
-        })
-        cy.wait(1000)
+        cy.login()
         cy.logout()
     })
     it('login with invalid', () => {
@@ -50,14 +31,7 @@ describe('landing page spec', () => {
     })
 
     it('session persistence', () => {
-        cy.fixture('testUsers').then(testUsers => {
-            const customer = {
-                email: Cypress.env(testUsers.customer.email),
-                password: Cypress.env(testUsers.customer.password)
-            }
-            // cy.login(customer, { create: false })
-            loginPage.login(customer, { create: false })
-        })
+        cy.login()
 
     })
 
