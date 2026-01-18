@@ -8,53 +8,59 @@ const sideBarPage = new SideBarPage()
 
 
 describe('landing page spec', () => {
-    it('opens on landing page', () => {
-      cy.request(Cypress.config('baseUrl'))
-        .should('have.property', 'status', 200);
-    })
-    it('opens on navbar page > orders & payment > order history', () => {
-      cy.login()
-      cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
-      cy.get('.mat-mdc-menu-content > [aria-label="Show Orders and Payment Menu"]').click({ force: true })
-      cy.get('[routerlink="/order-history"]').click({ force: true })
-    })
-    it('opens on navbar page > orders & payment > recycle', () => {
-      cy.login()
-      cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
-      cy.get('.mat-mdc-menu-content > [aria-label="Show Orders and Payment Menu"]').click({ force: true })
-      cy.get('[routerlink="/recycle"]').click({ force: true })
-    })
-    it('opens on navbar page > orders & payment >saved addresses', () => {
-      cy.login()
-      cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
-      cy.get('.mat-mdc-menu-content > [aria-label="Show Orders and Payment Menu"]').click({ force: true })
-      cy.get('[routerlink="/address/saved"]').click({ force: true })
-    })
-    it('opens on navbar page > orders & payment >payment options', () => {
-      cy.login()
-      cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
-      cy.get('.mat-mdc-menu-content > [aria-label="Show Orders and Payment Menu"]').click({ force: true })
-      cy.get('[routerlink="/saved-payment-methods"]').click({ force: true })
-    })
-    it('opens on navbar page > orders & payment > digital wallet', () => {
-      cy.login()
-      cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
-      cy.get('.mat-mdc-menu-content > [aria-label="Show Orders and Payment Menu"]').click({ force: true })
-      cy.get('[routerlink="/wallet"]').click({ force: true })
-    })
-    it('opens on navbar page > privacy & security', () => {
-      cy.login()
-    })
-    it('opens on sidebar page', () => {
-      cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
-      cy.get('.mat-mdc-nav-list').should('be.visible')
-    })
+  it('opens on landing page', () => {
+    cy.request(Cypress.config('baseUrl'))
+      .should('have.property', 'status', 200);
+  })
+  it('opens on navbar page > privacy & security > privacy policy', () => {
+    cy.login()
+    cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
+    cy.get('.mat-mdc-menu-content > [aria-label="Show Privacy and Security Menu"]').click({ force: true })
+    cy.get('[aria-label="Go to privacy policy page"]').click({ force: true })
+    cy.get('h1').should('be.visible')
+  })
+  it('opens on navbar page > privacy & security > request data export', () => {
+    cy.login()
+    cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
+    cy.get('.mat-mdc-menu-content > [aria-label="Show Privacy and Security Menu"]').click({ force: true })
+    cy.get('[aria-label="Go to data export page"]').click({ force: true })
+    cy.get('h1').should('be.visible')
+  })
+  it('opens on navbar page > privacy & security > request data erasure', () => {
+    cy.login()
+    cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
+    cy.get('.mat-mdc-menu-content > [aria-label="Show Privacy and Security Menu"]').click({ force: true })
+    cy.get('[aria-label="Go to data subject page"]').click({ force: true })
+    cy.get('h4').should('be.visible')
+  })
+  it('opens on navbar page > privacy & security > change password ', () => {
+    cy.login()
+    cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
+    cy.get('.mat-mdc-menu-content > [aria-label="Show Privacy and Security Menu"]').click({ force: true })
+    cy.get('[aria-label="Go to change password page"]').click({ force: true })
+    cy.get('h1').should('be.visible')
+  })
+  it('opens on navbar page > privacy & security > 2fa configuration', () => {
+    cy.login()
+    cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
+    cy.get('.mat-mdc-menu-content > [aria-label="Show Privacy and Security Menu"]').click({ force: true })
+    cy.get('[aria-label="Go to data export page"]').click({ force: true })
+    cy.get('h1').should('be.visible')
+  })
+  it('opens on navbar page > privacy & security > last login ip', () => {
+    cy.login()
+    cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
+    cy.get('.mat-mdc-menu-content > [aria-label="Show Privacy and Security Menu"]').click({ force: true })
+    cy.get('[aria-label="Go to last login ip page"]').click({ force: true })
+    cy.get('h1').should('be.visible')
+  })
 
 
-    // it.skip('basic cybersecurity headers', () => {
-    //   cy.checkHeaders('/#/');
 
-    // })
+  // it.skip('basic cybersecurity headers', () => {
+  //   cy.checkHeaders('/#/');
 
-  
+  // })
+
+
 })
