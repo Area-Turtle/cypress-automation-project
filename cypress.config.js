@@ -17,8 +17,9 @@ module.exports = defineConfig({
 
 
     specPattern: [
-      '**/**/LANDINGPAGE_spec.js',
       '**/**/LOGIN_spec.js',
+      '**/**/LANDINGPAGE_spec.js',
+      '**/**/PRIVACY_SECURITY_spec.js',
       '**/**SIDEBAR_spec.js',
       '**/**/FEATURES_spec.js',
       '**/**/SMOKE_spec.js'

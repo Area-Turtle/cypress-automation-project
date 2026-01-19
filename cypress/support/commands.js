@@ -23,18 +23,19 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-console.log('Commands loaded')
+import LoginPage from '../pages/login.page.js'
+const loginPage = new LoginPage()
 
 
-Cypress.Commands.add('typeWithAnimations', (selector, text, wpm = 150) => {
-    const delay = (60 / wpm) * 1000 / 5
-    cy.get(selector).should('be.visible').clear();
-    [...text].forEach((letter, index) => {
-        cy.get(selector)
-            .type(letter, { delay })
-            .wait(delay)
-    })
-})
+// Cypress.Commands.add('typeWithAnimations', (selector, text, wpm = 150) => {
+//     const delay = (60 / wpm) * 1000 / 5
+//     cy.get(selector).should('be.visible').clear();
+//     [...text].forEach((letter, index) => {
+//         cy.get(selector)
+//             .type(letter, { delay })
+//             .wait(delay)
+//     })
+// })
 
 Cypress.Commands.add('checkHeaders', (extention) => {
     const commonHeaders = [
@@ -70,60 +71,37 @@ Cypress.Commands.add('checkHeaders', (extention) => {
         });
 })
 
-Cypress.Commands.add('login', (user, { create = false } = {}) => {
-    cy.visit(Cypress.env('baseUrl') + '#/login')
-    if (create) {
-        // Register new user
-        cy.visit('/undefined#/register');
-        cy.get('#emailControl')
-            .should('be.visible').type(user.email);
-        cy.get('#passwordControl')
-            .should('be.visible').type(user.password);
-        cy.get('#repeatPasswordControl')
-            .should('be.visible').type(user.password);
+Cypress.Commands.add('login', (role = 'customer', options = {}) => {
+    const { create = false } = options
 
-        cy.get('.mat-mdc-select-placeholder')
-            .should('be.visible').click({ force: true });
-        cy.get('#mat-option-0')
-            .should('be.visible').click({ force: true });
-        cy.get('#securityAnswerControl')
-            .should('be.visible').type('abc');
-        cy.get('#registerButton')
-            .should('be.visible').click({ force: true });
+    cy.fixture('testUsers').then(users => {
+        const user = users[role]
+
+        loginPage.login(
+            {
+                email: Cypress.env(users.customer.email),
+                password: Cypress.env(users.customer.password)
+            },
+            { create }
+        )
+    })
+})
+
+Cypress.Commands.add('loginPOM', (user, { create = false } = {}) => {
+    cy.visit(Cypress.env('baseUrl') + '#/login')
+
+    if (create) {
+        cy.visit('/undefined#/register')
+        RegisterForm.register(user)
     } else {
-        // Login existing user
-        cy.get('[name="email"]')
-            .should('be.visible').type(user.email);
-        cy.get('[name="password"]')
-            .should('be.visible').type(user.password);
-        cy.get('#loginButton')
-            .should('be.visible').click({ force: true });
+        LoginForm.fill(user.email, user.password)
+        LoginForm.submit()
     }
 
 }, {
     validate() {
-        cy.request('/rest/user/whoami')
-            .its('status')
-            .should('eq', 200);
+        cy.request('/rest/user/whoami').its('status').should('eq', 200)
     }
-
-});
-
-Cypress.Commands.add('loginPOM', (user, { create = false } = {}) => {
-  cy.visit(Cypress.env('baseUrl') + '#/login')
-
-  if (create) {
-    cy.visit('/undefined#/register')
-    RegisterForm.register(user)
-  } else {
-    LoginForm.fill(user.email, user.password)
-    LoginForm.submit()
-  }
-
-}, {
-  validate() {
-    cy.request('/rest/user/whoami').its('status').should('eq', 200)
-  }
 })
 Cypress.Commands.add('loginSession', (user) => {
     cy.visit(Cypress.env('baseUrl') + '#/login')
@@ -190,8 +168,8 @@ Cypress.Commands.add('tabExists', (tabName) => {
             //const $tab = $list.find(`span.mat-list-text:contains("about")`)
             const $tab = $list.find('span.mat-list-text')
                 .filter((i, el) => Cypress.$(el).text().trim().toLowerCase() === tabName.toLowerCase())
-                cy.log($list.find('span.mat-list'))
-                cy.log(tabName)
+            cy.log($list.find('span.mat-list'))
+            cy.log(tabName)
             if ($tab.length > 0 && $tab.is(':visible')) {
                 cy.log(`Tab "${tabName}" exists and is visible`)
                 return true

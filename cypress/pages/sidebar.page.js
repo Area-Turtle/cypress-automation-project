@@ -12,9 +12,9 @@ class SideBarPage {
     this.visit()
     Sidebar.goToComplaints(email,message)
   }
-  navigateToSupportChat() {
+  navigateToSupportChat(text) {
     this.visit()
-    Sidebar.goToSupportChat()
+    Sidebar.goToSupportChat(text)
   }
   navigateToAboutUs() {
     this.visit()
