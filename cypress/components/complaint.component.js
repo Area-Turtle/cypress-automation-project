@@ -11,4 +11,4 @@ class Complaint {
     this.selectComment(message)
   }
 }
-export default new Complaint
+export default new Complaint()
