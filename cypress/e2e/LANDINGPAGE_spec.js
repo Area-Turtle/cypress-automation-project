@@ -54,7 +54,7 @@ describe('landing page spec', () => {
     headerPage.navigateToPaymentOptions(card[0],card[1],card[2],card[3],card[4])
   })
   it('opens on navbar page > orders & payment > digital wallet', () => {
-    headerPage.navigateToDigitalWallet()
+    headerPage.navigateToDigitalWallet('10')
   })
 
   //privacy navbar section

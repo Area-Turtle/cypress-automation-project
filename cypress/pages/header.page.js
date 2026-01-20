@@ -22,9 +22,9 @@ class HeaderPage {
         this.login()
         order.selectPayment(text, card, month, year, number)
     }
-    navigateToDigitalWallet() {
+    navigateToDigitalWallet(text) {
         this.login()
-        order.selectDigital()
+        order.selectDigital(text)
     }
     //navagation header privacy
     navigateToPrivacyPolicy() {

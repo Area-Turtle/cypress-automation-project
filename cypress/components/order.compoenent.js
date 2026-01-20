@@ -29,9 +29,10 @@ class Order {
         cy.get('[routerlink="/saved-payment-methods"]').click({ force: true })
         Money.createCard(text, card, month, year, number)
     }
-    selectDigital() {
+    selectDigital(text) {
         this.selectOrderPage()
         cy.get('[routerlink="/wallet"]').click({ force: true })
+        Money.newDeposit(text)
 
     }
 
