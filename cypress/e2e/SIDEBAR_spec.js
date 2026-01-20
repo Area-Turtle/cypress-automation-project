@@ -20,79 +20,79 @@ const sideBarPage = new SideBarPage()
 
 
 describe('customer feedback spec', () => {
-  // it('selects sidebar and it opens', () => {
-  //   cy.request(Cypress.env('baseUrl') + '#/login')
-  //     .should('have.property', 'status', 200);
-  //   sideBarPage.navigateToSideBar()
-  // })
+  it('selects sidebar and it opens', () => {
+    cy.request(Cypress.env('baseUrl') + '#/login')
+      .should('have.property', 'status', 200);
+    sideBarPage.navigateToSideBar()
+  })
 
-  // it('completes customer feedback form', () => {
-  //   sideBarPage.navigateToFeedBack('test input')
-  // })
+  it('completes customer feedback form', () => {
+    sideBarPage.navigateToFeedBack('test input')
+  })
 
-  // it('should block non-customers from Complaint page', () => {
-  //   // Log in as a normal user
-  //   cy.tabExists('Complaint').then(exists => {
-  //     if (exists) {
-  //       sideBarPage.navigateToComplaints()
-  //     } else {
-  //       cy.log('Tab not available — skipping click')
-  //     }
-  //   })
+  it('should block non-customers from Complaint page', () => {
+    // Log in as a normal user
+    cy.tabExists('Complaint').then(exists => {
+      if (exists) {
+        sideBarPage.navigateToComplaints()
+      } else {
+        cy.log('Tab not available — skipping click')
+      }
+    })
 
-  // })
+  })
 
-  // it('should allow users to access Complaint page', () => {
-  //   //Log in as admin
-  //   cy.fixture('testUsers').then(testUsers => {
-  //     const customer = {
-  //       email: Cypress.env(testUsers.customer.email),
-  //       password: Cypress.env(testUsers.customer.password)
-  //     }
-  //     loginPage.login(customer, { create: false })
-  //     sideBarPage.navigateToComplaints(customer.email, 'abc')
-  //   })
+  it('should allow users to access Complaint page', () => {
+    //Log in as admin
+    cy.fixture('testUsers').then(testUsers => {
+      const customer = {
+        email: Cypress.env(testUsers.customer.email),
+        password: Cypress.env(testUsers.customer.password)
+      }
+      loginPage.login(customer, { create: false })
+      sideBarPage.navigateToComplaints(customer.email, 'abc')
+    })
 
-  // })
-
-  // // })
-  // it('should block non-customers from chatbot page', () => {
-  //   // Log in as a normal user
-  //   cy.tabExists('chatbot').then(exists => {
-  //     if (exists) {
-  //       sideBarPage.navigateToSupportChat()
-  //     } else {
-  //       cy.log('Tab not available — skipping click')
-  //     }
-
-  //   })
-  // })
-  // it('should allow customers to access chatbot page', () => {
-  //   //Log in as admin
-  //   cy.login()
-  //   sideBarPage.navigateToSupportChat('hello my name is jeff')
-
-  // });
-
-  // it('opens on about us page', () => {
-  //   sideBarPage.navigateToAboutUs()
-  //   //cy.get('#corporate-history').should('be.visible')
-  // })
-  // it('opens on photo wall page', () => {
-  //   sideBarPage.navigateToPhotoWall()
-  // })
-
-  // it('should block non-customers from deluxe page', () => {
-  //   // Log in as a normal user
-  //   cy.tabExists('deluxe').then(exists => {
-  //     if (exists) {
-  //       sideBarPage.navigateToDeluxe()
-  //     } else {
-  //       cy.log('Tab not available — skipping click')
-  //     }
-  //   })
+  })
 
   // })
+  it('should block non-customers from chatbot page', () => {
+    // Log in as a normal user
+    cy.tabExists('chatbot').then(exists => {
+      if (exists) {
+        sideBarPage.navigateToSupportChat()
+      } else {
+        cy.log('Tab not available — skipping click')
+      }
+
+    })
+  })
+  it('should allow customers to access chatbot page', () => {
+    //Log in as admin
+    cy.login()
+    sideBarPage.navigateToSupportChat('hello my name is jeff')
+
+  });
+
+  it('opens on about us page', () => {
+    sideBarPage.navigateToAboutUs()
+    //cy.get('#corporate-history').should('be.visible')
+  })
+  it('opens on photo wall page', () => {
+    sideBarPage.navigateToPhotoWall()
+  })
+
+  it('should block non-customers from deluxe page', () => {
+    // Log in as a normal user
+    cy.tabExists('deluxe').then(exists => {
+      if (exists) {
+        sideBarPage.navigateToDeluxe()
+      } else {
+        cy.log('Tab not available — skipping click')
+      }
+    })
+
+  })
 
   it('opens on deluxe membership page', () => {
     cy.request(Cypress.env('baseUrl') + '#')

@@ -26,7 +26,7 @@ class Deluxe {
         cy.get('.card-text > .mdc-button > .mat-mdc-button-touch-target').click({ force: true })
     }
     enterCard(text, card, month, year, number) {
-        Card.createCard(text, card, month, year, number)
+        Money.createCard(text, card, month, year, number)
     }
     createNewCreditCard(text, card, month, year, number) {
         if (cy.get('.heading').should('be.visible')) {
