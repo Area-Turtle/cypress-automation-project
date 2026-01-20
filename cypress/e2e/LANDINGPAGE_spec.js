@@ -1,27 +1,11 @@
 
 import LoginPage from '../pages/login.page.js'
 import SideBarPage from '../pages/sidebar.page.js'
-import header from '../pages/header.page.js'
+import HeaderPage from '../pages/header.page.js'
 
 const loginPage = new LoginPage()
 const sideBarPage = new SideBarPage()
-const headerPage = new header()
-
-const response = {
-  headers: {
-    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-    "Content-Security-Policy": "default-src 'self'",
-    "X-Content-Type-Options": "nosniff",
-    "X-Frame-Options": "DENY",
-    "X-XSS-Protection": "1; mode=block",
-    "Referrer-Policy": "no-referrer",
-    "Permissions-Policy": "geolocation=(self)",
-    "Cache-Control": "no-store",
-    "Expect-CT": "max-age=86400, enforce, report-uri='https://example.com/report'",
-    "Access-Control-Allow-Origin": "*"
-  }
-};
-
+const headerPage = new HeaderPage()
 
 
 describe('landing page spec', () => {
@@ -29,7 +13,6 @@ describe('landing page spec', () => {
     cy.request(Cypress.config('baseUrl'))
       .should('have.property', 'status', 200);
   })
-
   it('opens on navbar page > view login', () => {
     cy.login()
     cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
@@ -37,8 +20,7 @@ describe('landing page spec', () => {
     cy.get('.mdl-card__supporting-text > .mdl-cell--12-col').should('be.visible').contains('User Profile')
   })
   it('opens on sidebar page', () => {
-    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
-    cy.get('.mat-mdc-nav-list').should('be.visible')
+    sideBarPage.navigateToSideBar()
   })
   it('opens on forward/reverse', () => {
     cy.request(Cypress.config('baseUrl'))
@@ -64,13 +46,35 @@ describe('landing page spec', () => {
     headerPage.navigateToRecycle()
   })
   it('opens on navbar page > orders & payment >saved addresses', () => {
-    headerPage.navigateToSavedAddressess()
+    const address = ['1','1','1231231234','1','1','1',4]
+    headerPage.navigateToSavedAddressess(address[0],address[1],address[2],address[3],address[4],address[5],address[6],)
   })
   it('opens on navbar page > orders & payment >payment options', () => {
-    headerPage.navigateToPaymentOptions()
+    const card = ['abc','1234123412341234','1','2',4]
+    headerPage.navigateToPaymentOptions(card[0],card[1],card[2],card[3],card[4])
   })
   it('opens on navbar page > orders & payment > digital wallet', () => {
-    headerPage.navigateToDigitalWallet()
+    headerPage.navigateToDigitalWallet('10')
+  })
+
+  //privacy navbar section
+  it('opens on navbar page > privacy & security > privacy policy', () => {
+    headerPage.navigateToPrivacyPolicy()
+  })
+  it('opens on navbar page > privacy & security > request data export', () => {
+    headerPage.navigateToDataExport()
+  })
+  it('opens on navbar page > privacy & security > request data erasure', () => {
+    headerPage.navigateToDataErasure()
+  })
+  it('opens on navbar page > privacy & security > change password ', () => {
+    headerPage.navigateToChangePassword()
+  })
+  it('opens on navbar page > privacy & security > 2fa configuration', () => {
+    headerPage.navigateTo2faConfiguration()
+  })
+  it('opens on navbar page > privacy & security > last login ip', () => {
+    headerPage.navigateToLoginIp()
   })
 
   // it.skip('basic cybersecurity headers', () => {

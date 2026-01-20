@@ -23,7 +23,7 @@ describe('customer feedback spec', () => {
   it('selects sidebar and it opens', () => {
     cy.request(Cypress.env('baseUrl') + '#/login')
       .should('have.property', 'status', 200);
-    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
+    sideBarPage.navigateToSideBar()
   })
 
   it('completes customer feedback form', () => {
@@ -98,7 +98,9 @@ describe('customer feedback spec', () => {
     cy.request(Cypress.env('baseUrl') + '#')
       .should('have.property', 'status', 200);
     cy.login()
-    sideBarPage.navigateToDeluxe()
+    //(text, card, month, year, number)
+    const card = ['abc','1234123412341234','1','2',4]
+    sideBarPage.navigateToDeluxe(card[0],card[1],card[2],card[3],card[4])
     // cy.fixture('testUsers').then(testUsers => {
     //   const admin = {
     //     email: testUsers.admin.email,
@@ -110,20 +112,20 @@ describe('customer feedback spec', () => {
     // })
   });
 
-  // it.skip('login with user', () => {
-  //   cy.fixture('testUsers').then(testUsers => {
-  //     const customer = {
-  //       email: Cypress.env(testUsers.customer.email),
-  //       password: Cypress.env(testUsers.customer.password)
-  //     }
-  //     cy.login(customer, { create: false })
-  //     cy.sidebarAccess('deluxe-membership')
-  //     cy.get('.deluxe-membership > .card-text > .item-name').should('be.visible')
-  //   })
-  //   cy.visit('/#/administration')
-  //   cy.contains('Administration').should('be.visible')
-  // });
-  // it.skip('basic cybersecurity headers', () => {
-  //   cy.checkHeaders('#/contact');
-  // })
+  // // it.skip('login with user', () => {
+  // //   cy.fixture('testUsers').then(testUsers => {
+  // //     const customer = {
+  // //       email: Cypress.env(testUsers.customer.email),
+  // //       password: Cypress.env(testUsers.customer.password)
+  // //     }
+  // //     cy.login(customer, { create: false })
+  // //     cy.sidebarAccess('deluxe-membership')
+  // //     cy.get('.deluxe-membership > .card-text > .item-name').should('be.visible')
+  // //   })
+  // //   cy.visit('/#/administration')
+  // //   cy.contains('Administration').should('be.visible')
+  // // });
+  // // it.skip('basic cybersecurity headers', () => {
+  // //   cy.checkHeaders('#/contact');
+  // // })
 })

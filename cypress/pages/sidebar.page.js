@@ -4,6 +4,9 @@ class SideBarPage {
   visit() {
     cy.visit(Cypress.env('baseUrl')+'#/')
   }
+  navigateToSideBar(){
+    Sidebar.verifyOpen()
+  }
   navigateToFeedBack(text) {
     this.visit()
     Sidebar.goToFeedBack(text)
@@ -24,9 +27,9 @@ class SideBarPage {
     this.visit()
     Sidebar.goToPhotoWall()
   }
-  navigateToDeluxe(){
+  navigateToDeluxe(text, card, month, year, number){
     this.visit()
-    Sidebar.goToDeluxe()
+    Sidebar.goToDeluxe(text, card, month, year, number)
   }
 }
 

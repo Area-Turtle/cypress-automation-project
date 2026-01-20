@@ -12,6 +12,10 @@ class Sidebar {
   open() {
     cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
   }
+  verifyOpen(){
+    this.open()
+    cy.get('.mat-mdc-nav-list').should('be.visible')
+  }
 
   // Select a menu item by name, only if visible
   selectMenuItem(name) {
@@ -67,7 +71,6 @@ class Sidebar {
       }
     })
   }
-
   goToComplaints(email, message) {
     this.isTabVisible('complain').then(isVisible => {
       if (isVisible) {
@@ -81,14 +84,13 @@ class Sidebar {
     })
 
   }
-
   goToSupportChat(text) {
     this.isTabVisible('chatbot').then(isVisible => {
       if (isVisible) {
         cy.log('chat-bot tab is visible')
         this.selectMenuItem('chatbot')
         // continue actions here
-        SupportChat.verifyPage()
+        SupportChat.verifyPage(text)
       } else {
         throw new Error('chat-bot tab is not visible')
       }
@@ -117,13 +119,13 @@ class Sidebar {
       }
     })
   }
-  goToDeluxe() {
+  goToDeluxe(text, card, month, year, number) {
     this.isTabVisible('deluxe-membership').then(isVisible => {
       if (isVisible) {
         cy.log('deluxe-membership tab is visible')
         this.selectMenuItem('deluxe-membership')
         // continue actions here
-        Deluxe.verifyDeluxe()
+        Deluxe.verifyDeluxe(text, card, month, year, number)
       } else {
         throw new Error('deluxe-membership tab is not visible')
       }
