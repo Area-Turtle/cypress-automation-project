@@ -35,7 +35,7 @@ class Deluxe {
         //         cy.get('.error').contains('You are already a deluxe member!')
         //     } else {
                 this.becomeMember()
-                this.selectCard()
+                // this.selectCard()
                 // this.selectAddCard()
                 cy.wait(1000)
                 this.enterCard(text, card, month, year, number)
