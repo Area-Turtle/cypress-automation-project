@@ -7,22 +7,6 @@ const loginPage = new LoginPage()
 const sideBarPage = new SideBarPage()
 const headerPage = new header()
 
-const response = {
-  headers: {
-    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-    "Content-Security-Policy": "default-src 'self'",
-    "X-Content-Type-Options": "nosniff",
-    "X-Frame-Options": "DENY",
-    "X-XSS-Protection": "1; mode=block",
-    "Referrer-Policy": "no-referrer",
-    "Permissions-Policy": "geolocation=(self)",
-    "Cache-Control": "no-store",
-    "Expect-CT": "max-age=86400, enforce, report-uri='https://example.com/report'",
-    "Access-Control-Allow-Origin": "*"
-  }
-};
-
-
 
 describe('landing page spec', () => {
   it('opens on landing page', () => {
@@ -71,6 +55,26 @@ describe('landing page spec', () => {
   })
   it('opens on navbar page > orders & payment > digital wallet', () => {
     headerPage.navigateToDigitalWallet()
+  })
+
+  //privacy navbar section
+  it('opens on navbar page > privacy & security > privacy policy', () => {
+    headerPage.navigateToPrivacyPolicy()
+  })
+  it('opens on navbar page > privacy & security > request data export', () => {
+    headerPage.navigateToDataExport()
+  })
+  it('opens on navbar page > privacy & security > request data erasure', () => {
+    headerPage.navigateToDataErasure()
+  })
+  it('opens on navbar page > privacy & security > change password ', () => {
+    headerPage.navigateToChangePassword()
+  })
+  it('opens on navbar page > privacy & security > 2fa configuration', () => {
+    headerPage.navigateTo2faConfiguration()
+  })
+  it('opens on navbar page > privacy & security > last login ip', () => {
+    headerPage.navigateToLoginIp()
   })
 
   // it.skip('basic cybersecurity headers', () => {

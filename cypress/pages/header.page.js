@@ -2,28 +2,54 @@ import order from '../components/order.compoenent.js'
 import privacy from '../components/privacy.compoenent.js'
 
 class header {
-    login(){
+    login() {
         cy.login()
     }
+    //navagation header order
     navigateToOrderHistory() {
         this.login()
         order.selectHistory()
     }
-    navigateToRecycle(){
-        cy.login()
+    navigateToRecycle() {
+        this.login()
         order.selectRecycle()
     }
     navigateToSavedAddressess() {
-        cy.login()
+        this.login()
         order.selectAddresses()
     }
     navigateToPaymentOptions() {
-        cy.login()
+        this.login()
         order.selectPayment()
     }
     navigateToDigitalWallet() {
-        cy.login()
+        this.login()
         order.selectDigital()
+    }
+    //navagation header privacy
+    navigateToPrivacyPolicy() {
+        this.login()
+        privacy.selectPrivacy()
+    }
+    navigateToDataExport() {
+        this.login()
+        privacy.selectExport()
+    }
+    navigateToDataErasure() {
+        this.login()
+        privacy.selectErasure()
+    }
+    navigateToChangePassword() {
+        this.login()
+        privacy.selectPassword()
+    }
+    navigateTo2faConfiguration() {
+        this.login()
+        privacy.selectConfiguration()
+    }
+    navigateToLoginIp() {
+        this.login()
+        privacy.seletctIp()
     }
 }
 export default header
