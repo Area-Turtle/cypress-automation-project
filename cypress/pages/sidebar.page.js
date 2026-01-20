@@ -27,9 +27,9 @@ class SideBarPage {
     this.visit()
     Sidebar.goToPhotoWall()
   }
-  navigateToDeluxe(){
+  navigateToDeluxe(text, card, month, year, number){
     this.visit()
-    Sidebar.goToDeluxe()
+    Sidebar.goToDeluxe(text, card, month, year, number)
   }
 }
 

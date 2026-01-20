@@ -14,13 +14,13 @@ class HeaderPage {
         this.login()
         order.selectRecycle()
     }
-    navigateToSavedAddressess() {
+    navigateToSavedAddressess(text1,text2,text3,text4,text5,text6,number) {
         this.login()
-        order.selectAddresses()
+        order.selectAddresses(text1,text2,text3,text4,text5,text6,number)
     }
-    navigateToPaymentOptions() {
+    navigateToPaymentOptions(text, card, month, year, number) {
         this.login()
-        order.selectPayment()
+        order.selectPayment(text, card, month, year, number)
     }
     navigateToDigitalWallet() {
         this.login()

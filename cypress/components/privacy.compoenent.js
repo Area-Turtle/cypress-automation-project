@@ -1,3 +1,5 @@
+import Card from './addMoney.component.js'
+
 class Privacy {
     selectNavBar() {
         cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })

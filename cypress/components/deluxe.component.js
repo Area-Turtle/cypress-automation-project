@@ -1,4 +1,4 @@
-import Card from '../components/addCard.component.js'
+import Money from './addMoney.component.js'
 
 class Deluxe {
     visit() {
@@ -23,17 +23,30 @@ class Deluxe {
 
     }
     becomeMember() {
-        cy.get('.card-text > .mdc-button > .mat-mdc-button-touch-target').click({force:true})
+        cy.get('.card-text > .mdc-button > .mat-mdc-button-touch-target').click({ force: true })
     }
-    addCard(){
-        cy.get('#mat-expansion-panel-header-0 > .mat-content > .mat-expansion-panel-header-description').click({force:true})
+    enterCard(text, card, month, year, number) {
+        Card.createCard(text, card, month, year, number)
     }
-    verifyDeluxe() {
+    createNewCreditCard(text, card, month, year, number) {
+        if (cy.get('.heading').should('be.visible')) {
+            cy.get('.error').contains('You are already a deluxe member!')
+        }
+        else {
+            this.becomeMember()
+            this.selectCard()
+            // this.selectAddCard()
+            cy.wait(1000)
+            this.enterCard(text, card, month, year, number)
+        }
+    }
+    verifyDeluxe(text, card, month, year, number) {
         this.visit()
         this.checkTitle()
         this.checkSubheading1()
         this.checkSubheading2()
         this.checkSubheading3()
+        this.createNewCreditCard(text, card, month, year, number)
     }
 }
 export default new Deluxe()
