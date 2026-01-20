@@ -1,3 +1,5 @@
+import Card from '../components/addCard.component.js'
+
 class Deluxe {
     visit() {
         cy.request(Cypress.env('baseUrl') + '#/deluxe-membership')

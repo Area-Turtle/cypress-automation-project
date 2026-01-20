@@ -12,6 +12,10 @@ class Sidebar {
   open() {
     cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
   }
+  verifyOpen(){
+    this.open()
+    cy.get('.mat-mdc-nav-list').should('be.visible')
+  }
 
   // Select a menu item by name, only if visible
   selectMenuItem(name) {
@@ -67,7 +71,6 @@ class Sidebar {
       }
     })
   }
-
   goToComplaints(email, message) {
     this.isTabVisible('complain').then(isVisible => {
       if (isVisible) {
@@ -81,7 +84,6 @@ class Sidebar {
     })
 
   }
-
   goToSupportChat(text) {
     this.isTabVisible('chatbot').then(isVisible => {
       if (isVisible) {

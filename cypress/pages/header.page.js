@@ -1,7 +1,7 @@
 import order from '../components/order.compoenent.js'
 import privacy from '../components/privacy.compoenent.js'
 
-class header {
+class HeaderPage {
     login() {
         cy.login()
     }
@@ -29,7 +29,7 @@ class header {
     //navagation header privacy
     navigateToPrivacyPolicy() {
         this.login()
-        privacy.selectPrivacy()
+        privacy.selectPage()
     }
     navigateToDataExport() {
         this.login()
@@ -49,7 +49,7 @@ class header {
     }
     navigateToLoginIp() {
         this.login()
-        privacy.seletctIp()
+        privacy.selectIp()
     }
 }
-export default header
+export default HeaderPage

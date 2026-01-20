@@ -1,47 +1,47 @@
-class Privacy{
+class Privacy {
     selectNavBar() {
         cy.get('#navbarAccount > .mat-mdc-button-touch-target').click({ force: true })
     }
     selectPrivacy() {
         cy.get('.mat-mdc-menu-content > [aria-label="Show Privacy and Security Menu"]').click({ force: true })
     }
-    selectH1(){
+    selectH1() {
         cy.get('h1').should('be.visible')
     }
-    selectH4(){
+    selectH4() {
         cy.get('h4').should('be.visible')
     }
-    selectOrderPage() {
+    selectPrivacyPage() {
         this.selectNavBar()
-        this.selectOrder()
+        this.selectPrivacy()
     }
-    selectPrivacy() {
-        this.selectOrderPage()
+    selectPage() {
+        this.selectPrivacyPage() 
         cy.get('[aria-label="Go to privacy policy page"]').click({ force: true })
         this.selectH1()
     }
     selectExport() {
-        this.selectOrderPage()
+        this.selectPrivacyPage() 
         cy.get('[aria-label="Go to data export page"]').click({ force: true })
         this.selectH1()
     }
     selectErasure() {
-        this.selectOrderPage()
+        this.selectPrivacyPage() 
         cy.get('[aria-label="Go to data subject page"]').click({ force: true })
         this.selectH4()
     }
     selectPassword() {
-        this.selectOrderPage()
+        this.selectPrivacyPage() 
         cy.get('[aria-label="Go to change password page"]').click({ force: true })
         this.selectH1()
     }
     selectConfiguration() {
-        this.selectOrderPage()
+        this.selectPrivacyPage() 
         cy.get('[aria-label="Go to data export page"]').click({ force: true })
         this.selectH1()
     }
-        seletcIp() {
-        this.selectOrderPage()
+    selectIp() {
+        this.selectPrivacyPage() 
         cy.get('[aria-label="Go to last login ip page"]').click({ force: true })
         this.selectH1()
     }

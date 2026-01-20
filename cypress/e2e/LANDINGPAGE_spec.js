@@ -1,11 +1,11 @@
 
 import LoginPage from '../pages/login.page.js'
 import SideBarPage from '../pages/sidebar.page.js'
-import header from '../pages/header.page.js'
+import HeaderPage from '../pages/header.page.js'
 
 const loginPage = new LoginPage()
 const sideBarPage = new SideBarPage()
-const headerPage = new header()
+const headerPage = new HeaderPage()
 
 
 describe('landing page spec', () => {
@@ -21,8 +21,7 @@ describe('landing page spec', () => {
     cy.get('.mdl-card__supporting-text > .mdl-cell--12-col').should('be.visible').contains('User Profile')
   })
   it('opens on sidebar page', () => {
-    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
-    cy.get('.mat-mdc-nav-list').should('be.visible')
+    sideBarPage.navigateToSideBar()
   })
   it('opens on forward/reverse', () => {
     cy.request(Cypress.config('baseUrl'))

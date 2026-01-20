@@ -4,6 +4,9 @@ class SideBarPage {
   visit() {
     cy.visit(Cypress.env('baseUrl')+'#/')
   }
+  navigateToSideBar(){
+    Sidebar.verifyOpen()
+  }
   navigateToFeedBack(text) {
     this.visit()
     Sidebar.goToFeedBack(text)

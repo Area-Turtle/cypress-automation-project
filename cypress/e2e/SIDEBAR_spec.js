@@ -23,7 +23,7 @@ describe('customer feedback spec', () => {
   it('selects sidebar and it opens', () => {
     cy.request(Cypress.env('baseUrl') + '#/login')
       .should('have.property', 'status', 200);
-    cy.get('.mdc-icon-button > .mat-icon').click({ force: true })
+    sideBarPage.navigateToSideBar()
   })
 
   it('completes customer feedback form', () => {
@@ -110,20 +110,20 @@ describe('customer feedback spec', () => {
     // })
   });
 
-  // it.skip('login with user', () => {
-  //   cy.fixture('testUsers').then(testUsers => {
-  //     const customer = {
-  //       email: Cypress.env(testUsers.customer.email),
-  //       password: Cypress.env(testUsers.customer.password)
-  //     }
-  //     cy.login(customer, { create: false })
-  //     cy.sidebarAccess('deluxe-membership')
-  //     cy.get('.deluxe-membership > .card-text > .item-name').should('be.visible')
-  //   })
-  //   cy.visit('/#/administration')
-  //   cy.contains('Administration').should('be.visible')
-  // });
-  // it.skip('basic cybersecurity headers', () => {
-  //   cy.checkHeaders('#/contact');
-  // })
+  // // it.skip('login with user', () => {
+  // //   cy.fixture('testUsers').then(testUsers => {
+  // //     const customer = {
+  // //       email: Cypress.env(testUsers.customer.email),
+  // //       password: Cypress.env(testUsers.customer.password)
+  // //     }
+  // //     cy.login(customer, { create: false })
+  // //     cy.sidebarAccess('deluxe-membership')
+  // //     cy.get('.deluxe-membership > .card-text > .item-name').should('be.visible')
+  // //   })
+  // //   cy.visit('/#/administration')
+  // //   cy.contains('Administration').should('be.visible')
+  // // });
+  // // it.skip('basic cybersecurity headers', () => {
+  // //   cy.checkHeaders('#/contact');
+  // // })
 })
