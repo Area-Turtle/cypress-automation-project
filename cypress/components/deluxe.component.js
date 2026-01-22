@@ -29,18 +29,20 @@ class Deluxe {
         Money.createCard(text, card, month, year, number)
     }
     createNewCreditCard(text, card, month, year, number) {
-        // cy.get('.heading').then(($body) => {
-        //     if ($body.find('.heading').length > 0) {
-        //         // .heading exists
-        //         cy.get('.error').contains('You are already a deluxe member!')
-        //     } else {
+        cy.get('body').then(($body) => {
+            if ($body.find('.heading').length > 0) {
+                // .heading exists
+                cy.get('.error').contains('You are already a deluxe member!')
+            } else {
                 this.becomeMember()
                 // this.selectCard()
                 // this.selectAddCard()
                 cy.wait(1000)
                 this.enterCard(text, card, month, year, number)
-            // }
-        // })
+                Money.confirmCard()
+                Money.nextButton()
+            }
+        })
     }
     verifyDeluxe(text, card, month, year, number) {
         this.visit()
@@ -49,6 +51,7 @@ class Deluxe {
         this.checkSubheading2()
         this.checkSubheading3()
         this.createNewCreditCard(text, card, month, year, number)
+
     }
 }
 export default new Deluxe()

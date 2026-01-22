@@ -83,7 +83,7 @@ class Money {
         cy.get('#mat-input-4').type(text)
     }
     confirmCard() {
-        cy.get('#mat-radio-41-input').click({ force: true })
+        cy.get(':nth-child(2) > .cdk-column-Selection').click({ force: true })
     }
     nextButton() {
         cy.get('.nextButton > .mat-mdc-button-touch-target').click({ force: true })
