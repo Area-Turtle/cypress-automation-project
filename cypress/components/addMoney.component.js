@@ -83,10 +83,16 @@ class Money {
         cy.get('#mat-input-4').type(text)
     }
     confirmCard() {
-        cy.get(':nth-child(2) > .cdk-column-Selection').click({ force: true })
+        cy.get(':nth-child(2) > .cdk-column-Selection')
+            .find('mat-radio-button')
+            .click({ force: true })
     }
     nextButton() {
         cy.get('.nextButton > .mat-mdc-button-touch-target').click({ force: true })
+    }
+    confirmPayment(){
+        this.confirmCard()
+        this.nextButton()
     }
     newDeposit(text) {
         this.depositDigital(text)
