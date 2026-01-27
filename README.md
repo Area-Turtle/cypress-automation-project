@@ -7,10 +7,6 @@ Demo Website is from OWASP Juice-Shop
 - [Features](#features)
 - [Installation](#installation)
 - [Installation2](#installation2)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ---
 
