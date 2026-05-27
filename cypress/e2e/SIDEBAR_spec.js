@@ -25,7 +25,30 @@ describe('customer feedback spec', () => {
       .should('have.property', 'status', 200);
     sideBarPage.navigateToSideBar()
   })
-
+  it('selects sidebar and text says contact', () => {
+    cy.request(Cypress.env('baseUrl') + '#/login')
+      .should('have.property', 'status', 200);
+    sideBarPage.navigateToSideBar()
+    cy.get('body > app-root > mat-sidenav-container > mat-sidenav > div > sidenav > mat-nav-list > h3:nth-child(5)').contains('Contact')
+  })
+  it('selects sidebar and text says company', () => {
+    cy.request(Cypress.env('baseUrl') + '#/login')
+      .should('have.property', 'status', 200);
+    sideBarPage.navigateToSideBar()
+    cy.get('body > app-root > mat-sidenav-container > mat-sidenav > div > sidenav > mat-nav-list > h3:nth-child(8)').contains('Company')
+  })
+  it('selects sidebar and footer says owasp juice shop', () => {
+    cy.request(Cypress.env('baseUrl') + '#/login')
+      .should('have.property', 'status', 200);
+    sideBarPage.navigateToSideBar()
+    cy.get('body > app-root > mat-sidenav-container > mat-sidenav > div > sidenav > div > span > span:nth-child(1)').contains('OWASP Juice Shop')
+  })
+  it('selects sidebar and footer says v19.1.1', () => {
+    cy.request(Cypress.env('baseUrl') + '#/login')
+      .should('have.property', 'status', 200);
+    sideBarPage.navigateToSideBar()
+    cy.get('body > app-root > mat-sidenav-container > mat-sidenav > div > sidenav > div > span > span:nth-child(3)').contains('v19.1.1')
+  })
   it('completes customer feedback form', () => {
     sideBarPage.navigateToFeedBack('test input')
   })
@@ -99,8 +122,8 @@ describe('customer feedback spec', () => {
       .should('have.property', 'status', 200);
     cy.login()
     //(text, card, month, year, number)
-    const card = ['abc','1234123412341234','1','2',4]
-    sideBarPage.navigateToDeluxe(card[0],card[1],card[2],card[3],card[4])
+    const card = ['abc', '1234123412341234', '1', '2', 4]
+    sideBarPage.navigateToDeluxe(card[0], card[1], card[2], card[3], card[4])
     // cy.fixture('testUsers').then(testUsers => {
     //   const admin = {
     //     email: testUsers.admin.email,

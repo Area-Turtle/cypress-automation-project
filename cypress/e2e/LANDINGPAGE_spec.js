@@ -56,6 +56,13 @@ describe('landing page spec', () => {
       .should('be.visible')
       .contains('All Products')
   })
+    it('page pagination works', () => {
+    cy.request(Cypress.config('baseUrl'))
+      .should('have.property', 'status', 200);
+      cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > mat-paginator > div > div').click()
+      cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > mat-paginator > div > div > div.mat-mdc-paginator-range-actions').click({force:true})
+      //cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > mat-paginator > div > div > div.mat-mdc-paginator-range-actions > button.mdc-icon-button.mat-mdc-icon-button.mat-mdc-button-base.mat-mdc-tooltip-trigger.mat-mdc-paginator-navigation-next.mat-mdc-button-disabled-interactive.mat-unthemed > span.mat-ripple.mat-mdc-button-ripple').click()
+  })
   //order navbar section
   it('opens on navbar page > orders & payment > order history', () => {
     headerPage.navigateToOrderHistory()
