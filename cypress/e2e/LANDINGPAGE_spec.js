@@ -3,10 +3,10 @@ import LoginPage from '../pages/login.page.js'
 import SideBarPage from '../pages/sidebar.page.js'
 import HeaderPage from '../pages/header.page.js'
 
+
 const loginPage = new LoginPage()
 const sideBarPage = new SideBarPage()
 const headerPage = new HeaderPage()
-
 
 describe('landing page spec', () => {
   it('opens on landing page', () => {
@@ -56,13 +56,23 @@ describe('landing page spec', () => {
       .should('be.visible')
       .contains('All Products')
   })
-    it('page pagination works', () => {
+  it('page pagination works', () => {
     cy.request(Cypress.config('baseUrl'))
       .should('have.property', 'status', 200);
-      cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > mat-paginator > div > div').click()
-      cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > mat-paginator > div > div > div.mat-mdc-paginator-range-actions').click({force:true})
-      //cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > mat-paginator > div > div > div.mat-mdc-paginator-range-actions > button.mdc-icon-button.mat-mdc-icon-button.mat-mdc-button-base.mat-mdc-tooltip-trigger.mat-mdc-paginator-navigation-next.mat-mdc-button-disabled-interactive.mat-unthemed > span.mat-ripple.mat-mdc-button-ripple').click()
+    cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > mat-paginator > div > div > div.mat-mdc-paginator-range-actions > button.mdc-icon-button.mat-mdc-icon-button.mat-mdc-button-base.mat-mdc-tooltip-trigger.mat-mdc-paginator-navigation-next.mat-mdc-button-disabled-interactive.mat-unthemed').click({ force: true })
+    cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > mat-paginator > div > div > div.mat-mdc-paginator-range-actions > div')
+      .contains('13 – 24 of 36')
   })
+  it('dropdown selection works', () => {
+    cy.request(Cypress.config('baseUrl'))
+      .should('have.property', 'status', 200);
+    cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > mat-paginator > div > div > div.mat-mdc-paginator-page-size.ng-star-inserted > mat-form-field > div.mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--outlined.mdc-text-field--no-label > div > div.mat-mdc-form-field-infix > div')
+      .click({ force: true })
+    cy.get('#mat-option-2').click({ force: true })
+    cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > mat-paginator > div > div > div.mat-mdc-paginator-range-actions > div')
+      .contains('1 – 36 of 36')
+  })
+
   //order navbar section
   it('opens on navbar page > orders & payment > order history', () => {
     headerPage.navigateToOrderHistory()
@@ -104,8 +114,6 @@ describe('landing page spec', () => {
 
   // it.skip('basic cybersecurity headers', () => {
   //   cy.checkHeaders('/#/');
-
   // })
-
 
 })
