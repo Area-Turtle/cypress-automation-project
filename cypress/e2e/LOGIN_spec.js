@@ -8,11 +8,18 @@ describe('landing page spec', () => {
             .should('have.property', 'status', 200);
     })
     it('create new user', () => {
-        cy.login('customer',{ create: true })
+        cy.login('customer', { create: true })
     });
     it('login with user', () => {
-       cy.login()
+        cy.login()
     });
+    it('checks if basket text is correct on landing page', () => {
+        cy.login()
+        cy.get('#homeButton').click()
+        cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-navbar > mat-toolbar > mat-toolbar-row > button.mdc-button.mat-mdc-button-base.buttons.mat-mdc-button.mat-unthemed.ng-star-inserted > span.mdc-button__label > span.hide-lt-md')
+            .should('be.visible')
+            .contains('Your Basket')
+    })
 
     it('login/logout', () => {
         cy.login()

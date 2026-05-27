@@ -37,7 +37,25 @@ describe('landing page spec', () => {
     cy.url().should('not.include', '/about')
 
   })
-
+  it('checks if title text is correct on landing page', () => {
+    cy.request(Cypress.config('baseUrl'))
+      .should('have.property', 'status', 200);
+    cy.get('#homeButton > span')
+      .should('be.visible')
+      .contains('OWASP Juice Shop')
+  })
+  it('checks if account text is correct on landing page', () => {
+    cy.request(Cypress.config('baseUrl'))
+      .should('have.property', 'status', 200);
+    cy.get('#navbarAccount > span.mdc-button__label > span')
+      .should('be.visible')
+      .contains('Account')
+  })
+  it('checks if all product text is correct on landing page', () => {
+    cy.get('body > app-root > mat-sidenav-container > mat-sidenav-content > app-search-result > div > div > div.heading.mat-elevation-z6 > div.ng-star-inserted')
+      .should('be.visible')
+      .contains('All Products')
+  })
   //order navbar section
   it('opens on navbar page > orders & payment > order history', () => {
     headerPage.navigateToOrderHistory()
@@ -46,12 +64,12 @@ describe('landing page spec', () => {
     headerPage.navigateToRecycle()
   })
   it('opens on navbar page > orders & payment >saved addresses', () => {
-    const address = ['1','1','1231231234','1','1','1',4]
-    headerPage.navigateToSavedAddressess(address[0],address[1],address[2],address[3],address[4],address[5],address[6],)
+    const address = ['1', '1', '1231231234', '1', '1', '1', 4]
+    headerPage.navigateToSavedAddressess(address[0], address[1], address[2], address[3], address[4], address[5], address[6],)
   })
   it('opens on navbar page > orders & payment >payment options', () => {
-    const card = ['abc','1234123412341234','1','2',4]
-    headerPage.navigateToPaymentOptions(card[0],card[1],card[2],card[3],card[4])
+    const card = ['abc', '1234123412341234', '1', '2', 4]
+    headerPage.navigateToPaymentOptions(card[0], card[1], card[2], card[3], card[4])
   })
   it('opens on navbar page > orders & payment > digital wallet', () => {
     headerPage.navigateToDigitalWallet('10')
